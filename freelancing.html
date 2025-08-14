@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Dashboard - NextGen Learning Hub</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <style>
+    :root {
+      --primary: #0a130a;
+      --secondary: #2196F3;
+      --dark: #333;
+      --light: #f5f5f5;
+      --gray: #ddd;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background: linear-gradient(to right, #e0f7fa, #f1f8e9);
+      color: var(--dark);
+    }
+
+    header {
+      background-color: #D4BEE4;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-size: 1.6rem;
+      font-weight: bold;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+    }
+
+    main {
+      padding: 2rem;
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .section-header h2 {
+      font-size: 2rem;
+      color: var(--primary);
+    }
+
+    .video-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+      padding: 1rem;
+    }
+
+    .video-box {
+      background-color: #ffffff;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      overflow: hidden;
+    }
+
+    .video-box iframe {
+      width: 100%;
+      height: 200px;
+      border: none;
+    }
+
+    footer {
+      text-align: center;
+      padding: 1.5rem;
+      background-color: white;
+      border-top: 1px solid var(--gray);
+      margin-top: 2rem;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="logo">📘 NextGen Learning Hub</div>
+  </header>
+
+  <main>
+    <div class="section-header">
+      <h2>Free Digital Marketing Learning Videos</h2>
+      <p>Start learning digital marketing with these easy-to-follow lessons</p>
+    </div>
+
+    <div class="video-grid">
+      <div class="video-box">
+        <iframe src="https://www.youtube.com/embed/BZLUEKnMfIY" allowfullscreen></iframe>
+      </div>
+      <div class="video-box">
+        <iframe src="https://www.youtube.com/embed/kunkYTKFNtI" allowfullscreen></iframe>
+      </div>
+      <div class="video-box">
+        <iframe src="https://www.youtube.com/embed/fVp-27hg9mQ" allowfullscreen></iframe>
+      </div>
+      <div class="video-box">
+        <iframe src="https://www.youtube.com/embed/rXtaM3x7kHA" allowfullscreen></iframe>
+      </div>
+      <div class="video-box">
+        <iframe src="https://www.youtube.com/embed/iMyv1Lw0-SQ" allowfullscreen></iframe>
+      </div>
+      <div class="video-box">
+        <iframe src="https://www.youtube.com/embed/J0ZxvVg6W_A" allowfullscreen></iframe>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    &copy; 2025 NextGen Learning Hub. All rights reserved.
+  </footer>
+
+</body>
+</html>

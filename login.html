@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login - NextGen Learning Hub</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f2f2f2;
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+      background-color: #4CAF50;
+      padding: 1rem;
+      text-align: center;
+      color: white;
+      font-size: 1.2rem;
+    }
+
+    .main-content {
+      padding: 2rem;
+      text-align: center;
+    }
+
+    .form-section {
+      max-width: 400px;
+      margin: 2rem auto;
+      padding: 2rem;
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .register-form, .login-form {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    input {
+      padding: 0.8rem;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-size: 1rem;
+    }
+
+    button {
+      padding: 0.8rem;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: background-color 0.3s;
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+
+    .or-text {
+      text-align: center;
+      margin: 1rem 0;
+      color: #666;
+    }
+
+    .signup-button {
+      background-color: transparent;
+      color: #4CAF50;
+      border: 1px solid #4CAF50;
+    }
+
+    .signup-button:hover {
+      background-color: #f8f8f8;
+    }
+
+    footer {
+      text-align: center;
+      padding: 1rem;
+      margin-top: 2rem;
+      font-size: 0.9rem;
+      color: #777;
+    }
+
+    a {
+      color: #4CAF50;
+      text-decoration: none;
+      font-size: 0.9rem;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="logo">📘 NextGen Learning Hub</div>
+  </header>
+
+  <main class="main-content">
+    <h1>Welcome Back to NextGen Learning Hub</h1>
+    <p class="description">
+      Continue your learning journey with access to all your courses and progress.
+    </p>
+
+    <div class="form-section">
+      <h2>Sign In</h2>
+      <form id="loginForm" class="login-form">
+        <input type="email" name="email" placeholder="Email" required />
+        <input type="password" name="password" placeholder="Password" required />
+        <button type="submit">Sign In</button>
+      </form>
+
+      <p style="text-align: right; margin: 0;">
+        <a href="#" id="forgotLink">Forgot Password?</a>
+      </p>
+
+      <!-- Password Reset Form -->
+      <div id="forgotForm" style="display: none; margin-top: 1rem;" class="login-form">
+        <input type="email" id="resetEmail" placeholder="Enter your email" required />
+        <input type="password" id="newPassword" placeholder="Enter new password" required />
+        <input type="password" id="confirmPassword" placeholder="Confirm new password" required />
+        <button type="button" id="resetBtn">Reset Password</button>
+      </div>
+
+      <p class="or-text">— OR —</p>
+
+      <button class="signup-button" onclick="location.href='a.html'">Need an account? Sign Up</button>
+    </div>
+  </main>
+
+  <footer>
+    &copy; 2025 NextGen Learning Hub. Empowering Education for Everyone.
+  </footer>
+
+  <script>
+    $(document).ready(function () {
+      // Handle login form submission
+      $('#loginForm').submit(function (e) {
+        e.preventDefault();
+
+        const email = $('input[name="email"]').val();
+        const password = $('input[name="password"]').val();
+        const submitBtn = $(this).find('button[type="submit"]');
+        const originalText = submitBtn.text();
+        submitBtn.text('Signing in...').prop('disabled', true);
+
+        $.ajax({
+          url: '/api/auth/login',
+          method: 'POST',
+          contentType: 'application/json',
+          data: JSON.stringify({ email, password }),
+          success: function(res) {
+            if(res.success){
+              // Token save করো localStorage এ
+              localStorage.setItem('token', res.token);
+              localStorage.setItem('userEmail', res.email);
+              window.location.href = 'dashboard.html';
+            } else {
+              alert(res.error || 'Login failed. Please check your credentials.');
+            }
+          },
+          error: function(err){
+            console.error('Login error:', err);
+            alert('An error occurred. Please try again.');
+          },
+          complete: function () {
+            submitBtn.text(originalText).prop('disabled', false);
+          }
+        });
+      });
+
+      // Toggle forgot password form
+      $('#forgotLink').click(function (e) {
+        e.preventDefault();
+        $('#forgotForm').slideToggle();
+      });
+
+      // Handle password reset
+      $('#resetBtn').click(function () {
+        const email = $('#resetEmail').val();
+        const newPassword = $('#newPassword').val();
+        const confirmPassword = $('#confirmPassword').val();
+
+        if (!email || !newPassword || !confirmPassword) {
+          alert('Please fill out all fields.');
+          return;
+        }
+
+        if (newPassword !== confirmPassword) {
+          alert('Passwords do not match.');
+          return;
+        }
+
+        $.ajax({
+          url: 'http://localhost:5000/api/auth/reset-password',
+          type: 'POST',
+          contentType: 'application/json',
+          data: JSON.stringify({ email, newPassword }),
+          success: function (response) {
+            if (response.success) {
+              alert('Password reset successful. You can now sign in.');
+              $('#forgotForm').slideUp();
+              $('#resetEmail').val('');
+              $('#newPassword').val('');
+              $('#confirmPassword').val('');
+            } else {
+              alert(response.error || 'Failed to reset password.');
+            }
+          },
+          error: function (xhr, status, error) {
+            console.error('Reset error:', error);
+            alert('Something went wrong. Try again.');
+          }
+        });
+      });
+    });
+  </script>
+
+</body>
+</html>

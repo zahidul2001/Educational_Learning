@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NextGen Learning Hub</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: #f3f4f6;
+        text-align: center;
+        padding-top: 50px;
+    }
+    .btn {
+        display: inline-block;
+        padding: 12px 24px;
+        background: #4f46e5;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-size: 16px;
+        cursor: pointer;
+        text-decoration: none;
+        transition: background 0.2s ease;
+    }
+    .btn:hover {
+        background: #4338ca;
+    }
+</style>
+</head>
+<body>
+
+<h1>Welcome to NextGen Learning Hub</h1>
+<p>Access thousands of high-quality online courses.</p>
+
+<!-- View All Courses Button -->
+<a href="#" id="viewCoursesBtn" class="btn">View All Courses</a>
+
+<script>
+
+
+    document.getElementById("viewCoursesBtn").addEventListener("click", function (event) {
+        event.preventDefault(); 
+
+        const loggedIn = localStorage.getItem("isLoggedIn");
+
+        if (loggedIn === "true") {
+            
+            window.location.href = "courses.html";
+        } else {
+            
+            window.location.href = "login.html";
+        }
+    });
+</script>
+
+</body>
+</html>
