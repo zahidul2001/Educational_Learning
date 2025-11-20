@@ -1,0 +1,1088 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Premium Courses - NextGen Learning Hub</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <style>
+    :root {
+      --primary: #2E86AB;
+      --secondary: #A23B72;
+      --accent: #F18F01;
+      --premium: #FFD700;
+      --dark: #2D3047;
+      --light: #F8F9FA;
+      --success: #4CAF50;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', 'Segoe UI', sans-serif;
+    }
+
+    body {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+    }
+
+    .dashboard-container {
+      display: flex;
+      min-height: 100vh;
+    }
+
+    /* Sidebar Styles */
+    .sidebar {
+      width: 280px;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      padding: 2rem 1.5rem;
+      box-shadow: 5px 0 25px rgba(0,0,0,0.1);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .logo-section {
+      text-align: center;
+      margin-bottom: 2rem;
+      padding-bottom: 1rem;
+      border-bottom: 2px solid var(--light);
+    }
+
+    .logo {
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+    }
+
+    .logo span {
+      background: linear-gradient(45deg, var(--primary), var(--secondary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .user-info {
+      text-align: center;
+      margin-bottom: 2rem;
+      padding: 1rem;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      border-radius: 15px;
+      color: white;
+    }
+
+    .user-avatar {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background: white;
+      margin: 0 auto 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      color: var(--primary);
+    }
+
+    .nav-menu {
+      flex: 1;
+    }
+
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1rem 1.5rem;
+      margin-bottom: 0.5rem;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      color: var(--dark);
+      text-decoration: none;
+    }
+
+    .nav-item:hover {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: white;
+      transform: translateX(10px);
+    }
+
+    .nav-item.active {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: white;
+      box-shadow: 0 5px 15px rgba(46, 134, 171, 0.4);
+    }
+
+    .nav-item i {
+      font-size: 1.2rem;
+      width: 25px;
+    }
+
+    .logout-btn {
+      background: linear-gradient(135deg, #FF6B6B, #EE5A24);
+      color: white;
+      border: none;
+      padding: 1rem;
+      border-radius: 12px;
+      cursor: pointer;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      transition: all 0.3s ease;
+      margin-top: auto;
+    }
+
+    .logout-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(255, 107, 107, 0.4);
+    }
+
+    /* Main Content Styles */
+    .main-content {
+      flex: 1;
+      padding: 2rem;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      overflow-y: auto;
+    }
+
+    .header-section {
+      background: rgba(255, 255, 255, 0.95);
+      padding: 2rem;
+      border-radius: 20px;
+      margin-bottom: 2rem;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+
+    .header-section h1 {
+      font-size: 2.5rem;
+      background: linear-gradient(45deg, var(--premium), #FFA500);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 0.5rem;
+    }
+
+    .header-section p {
+      color: #666;
+      font-size: 1.1rem;
+    }
+
+    /* Search Bar Styles */
+    .search-container {
+      display: flex;
+      justify-content: center;
+      margin: 1.5rem 0;
+    }
+
+    .search-bar {
+      display: flex;
+      width: 100%;
+      max-width: 500px;
+      background: white;
+      border-radius: 50px;
+      overflow: hidden;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+
+    .search-bar input {
+      flex: 1;
+      padding: 1rem 1.5rem;
+      border: none;
+      outline: none;
+      font-size: 1rem;
+      background: transparent;
+    }
+
+    .search-bar button {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: white;
+      border: none;
+      padding: 1rem 1.5rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .search-bar button:hover {
+      background: linear-gradient(135deg, var(--secondary), var(--primary));
+    }
+
+    .search-results-info {
+      text-align: center;
+      color: white;
+      margin-bottom: 1rem;
+      font-size: 1.1rem;
+    }
+
+    /* Premium Benefits */
+    .benefits-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 3rem;
+    }
+
+    .benefit-card {
+      background: rgba(255, 255, 255, 0.95);
+      padding: 2rem;
+      border-radius: 15px;
+      text-align: center;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+      border-left: 4px solid var(--premium);
+    }
+
+    .benefit-card i {
+      font-size: 2.5rem;
+      background: linear-gradient(135deg, var(--premium), #FFA500);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 1rem;
+    }
+
+    .benefit-card h3 {
+      color: var(--dark);
+      margin-bottom: 1rem;
+    }
+
+    /* Courses Grid */
+    .courses-section {
+      margin-bottom: 3rem;
+    }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .section-header h2 {
+      color: white;
+      font-size: 2rem;
+    }
+
+    .courses-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 2rem;
+    }
+
+    .course-card {
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 20px;
+      padding: 2rem;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+      transition: all 0.3s ease;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      border: 2px solid var(--premium);
+    }
+
+    .course-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 5px;
+      background: linear-gradient(135deg, var(--premium), #FFA500);
+    }
+
+    .course-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+    }
+
+    .premium-badge {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      background: linear-gradient(135deg, var(--premium), #FFA500);
+      color: white;
+      padding: 0.3rem 0.8rem;
+      border-radius: 15px;
+      font-size: 0.7rem;
+      font-weight: 600;
+    }
+
+    .course-icon {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      background: linear-gradient(135deg, var(--premium), #FFA500);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .course-card h3 {
+      font-size: 1.5rem;
+      color: var(--dark);
+      margin-bottom: 1rem;
+    }
+
+    .course-card p {
+      color: #666;
+      margin-bottom: 1.5rem;
+      line-height: 1.6;
+    }
+
+    .course-features {
+      list-style: none;
+      margin-bottom: 1.5rem;
+    }
+
+    .course-features li {
+      padding: 0.5rem 0;
+      color: #666;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .course-features li i {
+      color: var(--success);
+    }
+
+    .course-price {
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--premium);
+      margin-bottom: 1rem;
+      text-align: center;
+    }
+
+    .original-price {
+      text-decoration: line-through;
+      color: #999;
+      font-size: 1.2rem;
+      margin-right: 0.5rem;
+    }
+
+    .discount-badge {
+      background: var(--success);
+      color: white;
+      padding: 0.2rem 0.5rem;
+      border-radius: 10px;
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+
+    .enroll-btn {
+      background: linear-gradient(135deg, var(--premium), #FFA500);
+      color: white;
+      border: none;
+      padding: 1rem 2rem;
+      border-radius: 25px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      width: 100%;
+      font-size: 1.1rem;
+    }
+
+    .enroll-btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 5px 15px rgba(255, 215, 0, 0.4);
+    }
+
+    /* Payment Modal */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0,0,0,0.5);
+      backdrop-filter: blur(5px);
+    }
+
+    .modal-content {
+      background: white;
+      margin: 5% auto;
+      padding: 2rem;
+      border-radius: 20px;
+      width: 90%;
+      max-width: 500px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+      position: relative;
+    }
+
+    .close-modal {
+      position: absolute;
+      right: 1rem;
+      top: 1rem;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: #666;
+    }
+
+    .payment-form {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .form-group label {
+      font-weight: 600;
+      color: var(--dark);
+    }
+
+    .form-group input {
+      padding: 1rem;
+      border: 2px solid #e0e0e0;
+      border-radius: 10px;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+    }
+
+    .form-group input:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(46, 134, 171, 0.1);
+    }
+
+    .payment-btn {
+      background: linear-gradient(135deg, var(--success), #45a049);
+      color: white;
+      border: none;
+      padding: 1rem;
+      border-radius: 10px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      margin-top: 1rem;
+    }
+
+    .payment-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(76, 175, 80, 0.4);
+    }
+
+    .payment-methods {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.5rem;
+      margin: 1rem 0;
+    }
+
+    .payment-method {
+      border: 2px solid #e0e0e0;
+      border-radius: 10px;
+      padding: 1rem;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .payment-method.selected {
+      border-color: var(--primary);
+      background: rgba(46, 134, 171, 0.1);
+    }
+
+    .payment-method i {
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
+    }
+
+    /* bKash specific styles */
+    .bkash-info {
+      background: #E2136E;
+      color: white;
+      padding: 1rem;
+      border-radius: 10px;
+      margin-bottom: 1rem;
+      text-align: center;
+      font-size: 0.9rem;
+    }
+
+    .bkash-info strong {
+      display: block;
+      font-size: 1.1rem;
+      margin-bottom: 0.5rem;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .dashboard-container {
+        flex-direction: column;
+      }
+      
+      .sidebar {
+        width: 100%;
+        order: 2;
+      }
+      
+      .main-content {
+        order: 1;
+      }
+      
+      .courses-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .benefits-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .payment-methods {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="dashboard-container">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="logo-section">
+        <div class="logo">
+          <i class="fas fa-graduation-cap"></i>
+          <span>NextGen Learning</span>
+        </div>
+      </div>
+
+      <div class="user-info">
+        <div class="user-avatar">
+          <i class="fas fa-user"></i>
+        </div>
+        <h3 id="userName">Welcome, Learner!</h3>
+        <p>Unlock Premium Features</p>
+      </div>
+
+      <nav class="nav-menu">
+        <a href="dashboard.html" class="nav-item">
+          <i class="fas fa-home"></i>
+          <span>Dashboard</span>
+        </a>
+        <a href="#" class="nav-item">
+          <i class="fas fa-book"></i>
+          <span>My Courses</span>
+        </a>
+        <a href="premium-courses.html" class="nav-item active">
+          <i class="fas fa-crown"></i>
+          <span>Premium Courses</span>
+        </a>
+        <a href="#" class="nav-item">
+          <i class="fas fa-chart-line"></i>
+          <span>Progress</span>
+        </a>
+        <a href="#" class="nav-item">
+          <i class="fas fa-cog"></i>
+          <span>Settings</span>
+        </a>
+      </nav>
+
+      <button class="logout-btn" id="logoutBtn">
+        <i class="fas fa-sign-out-alt"></i>
+        Logout
+      </button>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <div class="header-section">
+        <h1>💎 Premium Courses</h1>
+        <p>Unlock exclusive courses with advanced features, personalized support, and career opportunities</p>
+        
+        <!-- Search Bar -->
+        <div class="search-container">
+          <div class="search-bar">
+            <input type="text" id="searchInput" placeholder="Search for courses...">
+            <button onclick="searchCourses()">
+              <i class="fas fa-search"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Search Results Info -->
+      <div class="search-results-info" id="searchResultsInfo"></div>
+
+      <!-- Benefits Section -->
+      <div class="benefits-grid">
+        <div class="benefit-card">
+          <i class="fas fa-video"></i>
+          <h3>HD Video Content</h3>
+          <p>High-quality video lessons with lifetime access</p>
+        </div>
+        <div class="benefit-card">
+          <i class="fas fa-download"></i>
+          <h3>Download Resources</h3>
+          <p>Download course materials and source code</p>
+        </div>
+        <div class="benefit-card">
+          <i class="fas fa-certificate"></i>
+          <h3>Certification</h3>
+          <p>Get certified upon course completion</p>
+        </div>
+        <div class="benefit-card">
+          <i class="fas fa-headset"></i>
+          <h3>24/7 Support</h3>
+          <p>Dedicated support for premium students</p>
+        </div>
+      </div>
+
+      <!-- Premium Courses -->
+      <div class="courses-section">
+        <div class="section-header">
+          <h2>Featured Premium Courses</h2>
+        </div>
+        <div class="courses-grid" id="coursesGrid">
+          <!-- Course 1 -->
+          <div class="course-card" data-category="web development programming">
+            <div class="premium-badge">BEST SELLER</div>
+            <div class="course-icon">
+              <i class="fas fa-laptop-code"></i>
+            </div>
+            <h3>Full Stack Web Development</h3>
+            <p>Master modern web development with React, Node.js, MongoDB, and DevOps. Build real-world projects and deploy them.</p>
+            
+            <ul class="course-features">
+              <li><i class="fas fa-check"></i> 50+ hours of HD video</li>
+              <li><i class="fas fa-check"></i> 10+ real projects</li>
+              <li><i class="fas fa-check"></i> Lifetime access</li>
+              <li><i class="fas fa-check"></i> Certificate of completion</li>
+              <li><i class="fas fa-check"></i> Job preparation guide</li>
+            </ul>
+
+            <div class="course-price">
+              <span class="original-price">BDT5,999</span>
+              BDT2,999
+              <span class="discount-badge">50% OFF</span>
+            </div>
+
+            <button class="enroll-btn" onclick="showPaymentModal('Full Stack Web Development', 2999)">
+              <i class="fas fa-crown"></i> Enroll Now
+            </button>
+          </div>
+
+          <!-- Course 2 -->
+          <div class="course-card" data-category="ai machine learning programming">
+            <div class="premium-badge">TRENDING</div>
+            <div class="course-icon">
+              <i class="fas fa-robot"></i>
+            </div>
+            <h3>AI & Machine Learning Pro</h3>
+            <p>Comprehensive AI and ML course covering Python, TensorFlow, neural networks, and real AI projects.</p>
+            
+            <ul class="course-features">
+              <li><i class="fas fa-check"></i> 60+ hours of content</li>
+              <li><i class="fas fa-check"></i> 15+ AI projects</li>
+              <li><i class="fas fa-check"></i> Python programming</li>
+              <li><i class="fas fa-check"></i> TensorFlow & PyTorch</li>
+              <li><i class="fas fa-check"></i> Career guidance</li>
+            </ul>
+
+            <div class="course-price">
+              <span class="original-price">BDT7,999</span>
+              BDT3,999
+              <span class="discount-badge">50% OFF</span>
+            </div>
+
+            <button class="enroll-btn" onclick="showPaymentModal('AI & Machine Learning Pro', 3999)">
+              <i class="fas fa-crown"></i> Enroll Now
+            </button>
+          </div>
+
+          <!-- Course 3 -->
+          <div class="course-card" data-category="data science programming">
+            <div class="premium-badge">POPULAR</div>
+            <div class="course-icon">
+              <i class="fas fa-chart-line"></i>
+            </div>
+            <h3>Data Science Mastery</h3>
+            <p>Complete data science course with Python, SQL, statistics, machine learning, and data visualization.</p>
+            
+            <ul class="course-features">
+              <li><i class="fas fa-check"></i> 55+ hours of video</li>
+              <li><i class="fas fa-check"></i> 12+ data projects</li>
+              <li><i class="fas fa-check"></i> SQL & Database skills</li>
+              <li><i class="fas fa-check"></i> Statistics & Probability</li>
+              <li><i class="fas fa-check"></i> Interview preparation</li>
+            </ul>
+
+            <div class="course-price">
+              <span class="original-price">BDT6,999</span>
+              BDT3,499
+              <span class="discount-badge">50% OFF</span>
+            </div>
+
+            <button class="enroll-btn" onclick="showPaymentModal('Data Science Mastery', 3499)">
+              <i class="fas fa-crown"></i> Enroll Now
+            </button>
+          </div>
+
+          <!-- Course 4 -->
+          <div class="course-card" data-category="cybersecurity security">
+            <div class="premium-badge">NEW</div>
+            <div class="course-icon">
+              <i class="fas fa-shield-alt"></i>
+            </div>
+            <h3>Cyber Security Expert</h3>
+            <p>Learn ethical hacking, network security, penetration testing, and cybersecurity fundamentals.</p>
+            
+            <ul class="course-features">
+              <li><i class="fas fa-check"></i> 45+ hours of content</li>
+              <li><i class="fas fa-check"></i> Hands-on labs</li>
+              <li><i class="fas fa-check"></i> Kali Linux training</li>
+              <li><i class="fas fa-check"></i> Certification prep</li>
+              <li><i class="fas fa-check"></i> Career support</li>
+            </ul>
+
+            <div class="course-price">
+              <span class="original-price">BDT8,999</span>
+              BDT4,499
+              <span class="discount-badge">50% OFF</span>
+            </div>
+
+            <button class="enroll-btn" onclick="showPaymentModal('Cyber Security Expert', 4499)">
+              <i class="fas fa-crown"></i> Enroll Now
+            </button>
+          </div>
+
+          <!-- Course 5 -->
+          <div class="course-card" data-category="mobile app development programming">
+            <div class="premium-badge">HOT</div>
+            <div class="course-icon">
+              <i class="fas fa-mobile-alt"></i>
+            </div>
+            <h3>Mobile App Development</h3>
+            <p>Build iOS and Android apps with React Native, Flutter, and modern mobile development tools.</p>
+            
+            <ul class="course-features">
+              <li><i class="fas fa-check"></i> 40+ hours of video</li>
+              <li><i class="fas fa-check"></i> 8+ mobile apps</li>
+              <li><i class="fas fa-check"></i> React Native & Flutter</li>
+              <li><i class="fas fa-check"></i> App Store deployment</li>
+              <li><i class="fas fa-check"></i> Monetization strategies</li>
+            </ul>
+
+            <div class="course-price">
+              <span class="original-price">BDT5,499</span>
+              BDT2,749
+              <span class="discount-badge">50% OFF</span>
+            </div>
+
+            <button class="enroll-btn" onclick="showPaymentModal('Mobile App Development', 2749)">
+              <i class="fas fa-crown"></i> Enroll Now
+            </button>
+          </div>
+
+          <!-- Course 6 -->
+          <div class="course-card" data-category="cloud computing devops">
+            <div class="premium-badge">FEATURED</div>
+            <div class="course-icon">
+              <i class="fas fa-cloud"></i>
+            </div>
+            <h3>Cloud Computing & AWS</h3>
+            <p>Master cloud computing with AWS, Azure, and Google Cloud. Learn DevOps and cloud architecture.</p>
+            
+            <ul class="course-features">
+              <li><i class="fas fa-check"></i> 35+ hours of content</li>
+              <li><i class="fas fa-check"></i> AWS certification prep</li>
+              <li><i class="fas fa-check"></i> Real cloud projects</li>
+              <li><i class="fas fa-check"></i> DevOps practices</li>
+              <li><i class="fas fa-check"></i> Industry best practices</li>
+            </ul>
+
+            <div class="course-price">
+              <span class="original-price">BDT6,499</span>
+              BDT3,249
+              <span class="discount-badge">50% OFF</span>
+            </div>
+
+            <button class="enroll-btn" onclick="showPaymentModal('Cloud Computing & AWS', 3249)">
+              <i class="fas fa-crown"></i> Enroll Now
+            </button>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Payment Modal -->
+  <div id="paymentModal" class="modal">
+    <div class="modal-content">
+      <span class="close-modal" onclick="closePaymentModal()">&times;</span>
+      <h2>Complete Your Purchase</h2>
+      <div id="courseInfo" style="text-align: center; margin-bottom: 1.5rem;">
+        <h3 id="selectedCourse"></h3>
+        <div class="course-price" id="coursePrice"></div>
+      </div>
+      
+      <div class="payment-methods">
+        <div class="payment-method selected" onclick="selectPaymentMethod('card')">
+          <i class="fas fa-credit-card"></i>
+          <div>Card</div>
+        </div>
+        <div class="payment-method" onclick="selectPaymentMethod('paypal')">
+          <i class="fab fa-paypal"></i>
+          <div>PayPal</div>
+        </div>
+        <div class="payment-method" onclick="selectPaymentMethod('bkash')">
+          <i class="fas fa-mobile-alt"></i>
+          <div>bKash</div>
+        </div>
+      </div>
+
+      <div id="bkashInfo" class="bkash-info" style="display: none;">
+        <strong>Send Money to: 017XXXXXXXX</strong>
+        <div>Please use your email as reference when sending payment</div>
+      </div>
+
+      <form class="payment-form" id="paymentForm">
+        <!-- Card Payment Fields -->
+        <div id="cardFields">
+          <div class="form-group">
+            <label for="cardNumber">Card Number</label>
+            <input type="text" id="cardNumber" placeholder="1234 5678 9012 3456" required>
+          </div>
+          
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+            <div class="form-group">
+              <label for="expiryDate">Expiry Date</label>
+              <input type="text" id="expiryDate" placeholder="MM/YY" required>
+            </div>
+            <div class="form-group">
+              <label for="cvv">CVV</label>
+              <input type="text" id="cvv" placeholder="123" required>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="cardName">Name on Card</label>
+            <input type="text" id="cardName" placeholder="John Doe" required>
+          </div>
+        </div>
+
+        <!-- bKash Payment Fields -->
+        <div id="bkashFields" style="display: none;">
+          <div class="form-group">
+            <label for="bkashNumber">bKash Phone Number</label>
+            <input type="text" id="bkashNumber" placeholder="01XXXXXXXXX" required>
+          </div>
+          
+          <div class="form-group">
+            <label for="transactionId">Transaction ID</label>
+            <input type="text" id="transactionId" placeholder="Enter transaction ID" required>
+          </div>
+        </div>
+
+        <!-- PayPal Payment Fields -->
+        <div id="paypalFields" style="display: none;">
+          <div class="form-group">
+            <p>You will be redirected to PayPal to complete your payment</p>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" id="email" placeholder="your@email.com" required>
+        </div>
+
+        <button type="submit" class="payment-btn">
+          <i class="fas fa-lock"></i> Complete Payment
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    let selectedCourse = '';
+    let selectedPrice = 0;
+    let selectedPaymentMethod = 'card';
+
+    document.addEventListener('DOMContentLoaded', function () {
+      const token = localStorage.getItem('token');
+      const userEmail = localStorage.getItem('userEmail');
+      
+      if (!token) {
+        window.location.href = 'login.html';
+        return;
+      }
+
+      // Display user email
+      if (userEmail) {
+        document.getElementById('userName').textContent = `Welcome, ${userEmail.split('@')[0]}!`;
+        document.getElementById('email').value = userEmail;
+      }
+
+      // Logout functionality
+      document.getElementById('logoutBtn').addEventListener('click', function () {
+        localStorage.removeItem('token');
+        localStorage.removeItem('userEmail');
+        window.location.href = 'login.html';
+      });
+
+      // Payment form submission
+      document.getElementById('paymentForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        processPayment();
+      });
+
+      // Search on Enter key press
+      document.getElementById('searchInput').addEventListener('keyup', function(e) {
+        if (e.key === 'Enter') {
+          searchCourses();
+        }
+      });
+    });
+
+    function searchCourses() {
+      const searchTerm = document.getElementById('searchInput').value.toLowerCase().trim();
+      const courses = document.querySelectorAll('.course-card');
+      let resultsCount = 0;
+      
+      courses.forEach(course => {
+        const courseTitle = course.querySelector('h3').textContent.toLowerCase();
+        const courseDescription = course.querySelector('p').textContent.toLowerCase();
+        const courseCategory = course.getAttribute('data-category');
+        
+        if (courseTitle.includes(searchTerm) || 
+            courseDescription.includes(searchTerm) || 
+            courseCategory.includes(searchTerm)) {
+          course.style.display = 'block';
+          resultsCount++;
+        } else {
+          course.style.display = 'none';
+        }
+      });
+      
+      // Update search results info
+      const resultsInfo = document.getElementById('searchResultsInfo');
+      if (searchTerm) {
+        if (resultsCount === 0) {
+          resultsInfo.textContent = `No courses found for "${searchTerm}"`;
+        } else {
+          resultsInfo.textContent = `Found ${resultsCount} course(s) for "${searchTerm}"`;
+        }
+      } else {
+        resultsInfo.textContent = '';
+      }
+    }
+
+    function showPaymentModal(courseName, price) {
+      selectedCourse = courseName;
+      selectedPrice = price;
+      
+      document.getElementById('selectedCourse').textContent = courseName;
+      document.getElementById('coursePrice').textContent = `₹${price.toLocaleString()}`;
+      document.getElementById('paymentModal').style.display = 'block';
+      
+      // Reset form fields
+      document.getElementById('paymentForm').reset();
+      selectPaymentMethod('card');
+    }
+
+    function closePaymentModal() {
+      document.getElementById('paymentModal').style.display = 'none';
+      document.getElementById('paymentForm').reset();
+    }
+
+    function selectPaymentMethod(method) {
+      selectedPaymentMethod = method;
+      document.querySelectorAll('.payment-method').forEach(el => {
+        el.classList.remove('selected');
+      });
+      event.currentTarget.classList.add('selected');
+      
+      // Show/hide appropriate fields
+      document.getElementById('cardFields').style.display = method === 'card' ? 'block' : 'none';
+      document.getElementById('bkashFields').style.display = method === 'bkash' ? 'block' : 'none';
+      document.getElementById('paypalFields').style.display = method === 'paypal' ? 'block' : 'none';
+      document.getElementById('bkashInfo').style.display = method === 'bkash' ? 'block' : 'none';
+    }
+
+    function processPayment() {
+      const email = document.getElementById('email').value;
+      
+      // Validate email
+      if (!email) {
+        alert('Please enter your email address');
+        return;
+      }
+      
+      // Method-specific validation
+      let isValid = true;
+      let errorMessage = '';
+      
+      if (selectedPaymentMethod === 'card') {
+        const cardNumber = document.getElementById('cardNumber').value;
+        const expiryDate = document.getElementById('expiryDate').value;
+        const cvv = document.getElementById('cvv').value;
+        const cardName = document.getElementById('cardName').value;
+        
+        if (!cardNumber || !expiryDate || !cvv || !cardName) {
+          isValid = false;
+          errorMessage = 'Please fill in all card details';
+        } else if (cardNumber.replace(/\s/g, '').length !== 16) {
+          isValid = false;
+          errorMessage = 'Please enter a valid 16-digit card number';
+        }
+      } else if (selectedPaymentMethod === 'bkash') {
+        const bkashNumber = document.getElementById('bkashNumber').value;
+        const transactionId = document.getElementById('transactionId').value;
+        
+        if (!bkashNumber || !transactionId) {
+          isValid = false;
+          errorMessage = 'Please fill in all bKash details';
+        } else if (bkashNumber.length !== 11 || !bkashNumber.startsWith('01')) {
+          isValid = false;
+          errorMessage = 'Please enter a valid bKash phone number';
+        }
+      }
+      
+      if (!isValid) {
+        alert(errorMessage);
+        return;
+      }
+
+      // Show loading state
+      const payBtn = document.querySelector('.payment-btn');
+      const originalText = payBtn.innerHTML;
+      payBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing Payment...';
+      payBtn.disabled = true;
+
+      // Simulate payment processing
+      setTimeout(() => {
+        payBtn.innerHTML = '<i class="fas fa-check"></i> Payment Successful!';
+        payBtn.style.background = 'linear-gradient(135deg, #4CAF50, #45a049)';
+        
+        setTimeout(() => {
+          closePaymentModal();
+          payBtn.innerHTML = originalText;
+          payBtn.disabled = false;
+          payBtn.style.background = 'linear-gradient(135deg, #4CAF50, #45a049)';
+          
+          // Show success message
+          alert(`🎉 Congratulations! You have successfully enrolled in "${selectedCourse}" using ${selectedPaymentMethod.toUpperCase()}! You can now access the course from your dashboard.`);
+        }, 1500);
+      }, 3000);
+    }
+
+    // Close modal when clicking outside
+    window.onclick = function(event) {
+      const modal = document.getElementById('paymentModal');
+      if (event.target === modal) {
+        closePaymentModal();
+      }
+    }
+  </script>
+</body>
+</html>

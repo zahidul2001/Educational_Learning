@@ -7,264 +7,1308 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
   <style>
     :root {
-      --primary: #0a130a;
-      --primary-dark: #45a049;
-      --secondary: #2196F3;
-      --dark: #333;
-      --light: #f5f5f5;
-      --gray: #ddd;
+      --primary: #2E86AB;
+      --secondary: #A23B72;
+      --accent: #F18F01;
+      --premium: #FFD700;
+      --super-admin: #8E2DE2;
+      --dark: #2D3047;
+      --light: #F8F9FA;
+      --success: #4CAF50;
+      --danger: #e74c3c;
     }
 
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      font-family: 'Poppins', 'Segoe UI', sans-serif;
     }
 
     body {
-      background-color: #154D71;
-      color: var(--dark);
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
     }
 
-    header {
-      background-color: #8DBCC7;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-      padding: 1rem 2rem;
+    .dashboard-container {
       display: flex;
-      justify-content: space-between;
-      align-items: center;
+      min-height: 100vh;
+    }
+
+    /* Sidebar Styles */
+    .sidebar {
+      width: 280px;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      padding: 2rem 1.5rem;
+      box-shadow: 5px 0 25px rgba(0,0,0,0.1);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .logo-section {
+      text-align: center;
+      margin-bottom: 2rem;
+      padding-bottom: 1rem;
+      border-bottom: 2px solid var(--light);
     }
 
     .logo {
-      font-size: 1.6rem;
-      font-weight: bold;
+      font-size: 2rem;
+      font-weight: 700;
       color: var(--primary);
       display: flex;
       align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
     }
 
-    .nav-links {
-      display: flex;
-      gap: 1rem;
-      background-color: #e0f0ff;
-      padding: 0.5rem 1rem;
-      border-radius: 8px;
+    .logo span {
+      background: linear-gradient(45deg, var(--primary), var(--secondary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
     }
 
-    .nav-links a {
-      text-decoration: none;
-      color: var(--dark);
-      font-weight: 500;
-      padding: 0.4rem 0.8rem;
-      background-color: white;
-      border: 1px solid var(--gray);
-      border-radius: 6px;
-      transition: background-color 0.2s, color 0.2s;
-    }
-
-    .nav-links a:hover {
-      background-color: var(--primary-dark);
+    .user-info {
+      text-align: center;
+      margin-bottom: 2rem;
+      padding: 1rem;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      border-radius: 15px;
       color: white;
     }
 
-    .container {
+    .user-avatar {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background: white;
+      margin: 0 auto 1rem;
       display: flex;
-      min-height: calc(100vh - 80px);
-    }
-
-    aside {
-      width: 250px;
-      background-color: #89A8B2;
-      padding: 2rem 1rem;
-      box-shadow: 2px 0 10px rgba(0,0,0,0.05);
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-    }
-
-    .nav-item {
-      padding: 0.75rem 1rem;
-      margin-bottom: 0.5rem;
-      border-radius: 6px;
-      display: none;
       align-items: center;
-      gap: 0.75rem;
-      cursor: pointer;
-      transition: all 0.2s;
-    }
-
-    .nav-item.active {
-      display: flex;
-      background-color: white;
+      justify-content: center;
+      font-size: 2rem;
       color: var(--primary);
     }
 
+    .nav-menu {
+      flex: 1;
+    }
+
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1rem 1.5rem;
+      margin-bottom: 0.5rem;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      color: var(--dark);
+      text-decoration: none;
+    }
+
+    .nav-item:hover {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: white;
+      transform: translateX(10px);
+    }
+
+    .nav-item.active {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: white;
+      box-shadow: 0 5px 15px rgba(46, 134, 171, 0.4);
+    }
+
     .nav-item i {
-      width: 24px;
-      text-align: center;
+      font-size: 1.2rem;
+      width: 25px;
     }
 
     .logout-btn {
-      padding: 0.75rem;
-      margin-top: 2rem;
-      background-color: #1A2A80;
-      color: rgb(238, 231, 231);
+      background: linear-gradient(135deg, #FF6B6B, #EE5A24);
+      color: white;
       border: none;
-      border-radius: 6px;
+      padding: 1rem;
+      border-radius: 12px;
       cursor: pointer;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      transition: all 0.3s ease;
+      margin-top: auto;
     }
 
-    main {
+    .logout-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(255, 107, 107, 0.4);
+    }
+
+    /* Main Content Styles */
+    .main-content {
       flex: 1;
       padding: 2rem;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      overflow-y: auto;
+    }
+
+    .welcome-section {
+      background: rgba(255, 255, 255, 0.95);
+      padding: 2rem;
+      border-radius: 20px;
+      margin-bottom: 2rem;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    }
+
+    .welcome-section h1 {
+      font-size: 2.5rem;
+      background: linear-gradient(45deg, var(--primary), var(--secondary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 0.5rem;
+    }
+
+    .search-section {
+      background: white;
+      padding: 1.5rem;
+      border-radius: 15px;
+      margin-bottom: 2rem;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+    }
+
+    .search-box {
+      display: flex;
+      gap: 1rem;
+    }
+
+    .search-box input {
+      flex: 1;
+      padding: 1rem 1.5rem;
+      border: 2px solid #e0e0e0;
+      border-radius: 12px;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+    }
+
+    .search-box input:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(46, 134, 171, 0.1);
+    }
+
+    .search-btn {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: white;
+      border: none;
+      padding: 1rem 2rem;
+      border-radius: 12px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+
+    .search-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(46, 134, 171, 0.4);
+    }
+
+    /* Super Admin Request Section */
+    .super-admin-section {
+      background: rgba(255, 255, 255, 0.95);
+      padding: 2rem;
+      border-radius: 20px;
+      margin-bottom: 2rem;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+      text-align: center;
+      border: 2px solid var(--super-admin);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .super-admin-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 5px;
+      background: linear-gradient(135deg, var(--super-admin), #4A00E0);
+    }
+
+    .super-admin-icon {
+      font-size: 3rem;
+      color: var(--super-admin);
+      margin-bottom: 1rem;
+    }
+
+    .super-admin-btn {
+      background: linear-gradient(135deg, var(--super-admin), #4A00E0);
+      color: white;
+      border: none;
+      padding: 1rem 2rem;
+      border-radius: 25px;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 1.1rem;
+      transition: all 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-top: 1rem;
+    }
+
+    .super-admin-btn:hover:not(:disabled) {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 25px rgba(142, 45, 226, 0.4);
+    }
+
+    .super-admin-btn:disabled {
+      opacity: 0.7;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    /* Courses Grid */
+    .courses-section {
+      margin-bottom: 3rem;
     }
 
     .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
       margin-bottom: 1.5rem;
-      text-align: center;
-      background: #e0f0ff;
-      padding: 1rem;
-      border-radius: 8px;
+    }
+
+    .section-header h2 {
+      color: white;
+      font-size: 2rem;
+    }
+
+    .view-all-btn {
+      background: rgba(255, 255, 255, 0.2);
+      color: white;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .view-all-btn:hover {
+      background: rgba(255, 255, 255, 0.3);
+      transform: translateY(-2px);
     }
 
     .courses-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
       gap: 1.5rem;
     }
 
-    .course-box {
-      background-color: #e9f7ef;
+    .course-card {
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 20px;
       padding: 2rem;
-      border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
       text-align: center;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+      transition: all 0.3s ease;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
     }
 
-    .course-box:hover {
-      transform: translateY(-6px);
-      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.12);
+    .course-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 5px;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
     }
 
-    .course-box h3 {
-      margin-bottom: 0.75rem;
-      color: var(--primary);
-      font-size: 1.4rem;
+    .course-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.2);
     }
 
-    .course-box p {
-      margin-bottom: 1.2rem;
-      font-size: 0.95rem;
-      color: #333;
+    .premium-course {
+      border: 2px solid var(--premium);
     }
 
-    .course-box button {
-      background-color: #2196f3;
+    .premium-course::before {
+      background: linear-gradient(135deg, var(--premium), #FFA500);
+    }
+
+    .premium-badge {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      background: linear-gradient(135deg, var(--premium), #FFA500);
+      color: white;
+      padding: 0.3rem 0.8rem;
+      border-radius: 15px;
+      font-size: 0.7rem;
+      font-weight: 600;
+    }
+
+    .purchased-badge {
+      position: absolute;
+      top: 15px;
+      left: 15px;
+      background: linear-gradient(135deg, var(--success), #45a049);
+      color: white;
+      padding: 0.3rem 0.8rem;
+      border-radius: 15px;
+      font-size: 0.7rem;
+      font-weight: 600;
+    }
+
+    .course-icon {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .premium-course .course-icon {
+      background: linear-gradient(135deg, var(--premium), #FFA500);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .course-card h3 {
+      font-size: 1.5rem;
+      color: var(--dark);
+      margin-bottom: 1rem;
+    }
+
+    .course-card p {
+      color: #666;
+      margin-bottom: 1.5rem;
+      line-height: 1.6;
+    }
+
+    .course-price {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--premium);
+      margin-bottom: 1rem;
+    }
+
+    .start-btn {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
       color: white;
       border: none;
-      padding: 0.75rem 1.5rem;
-      font-size: 1rem;
-      font-weight: bold;
-      border-radius: 8px;
+      padding: 0.75rem 2rem;
+      border-radius: 25px;
       cursor: pointer;
-      transition: background-color 0.3s ease, transform 0.2s ease;
+      font-weight: 600;
+      transition: all 0.3s ease;
     }
 
-    .course-box button:hover {
-      background-color: #1976d2;
+    .premium-course .start-btn {
+      background: linear-gradient(135deg, var(--premium), #FFA500);
+    }
+
+    .purchased-course .start-btn {
+      background: linear-gradient(135deg, var(--success), #45a049);
+    }
+
+    .start-btn:hover {
       transform: scale(1.05);
+      box-shadow: 0 5px 15px rgba(46, 134, 171, 0.4);
     }
 
-    footer {
-      text-align: center;
+    .premium-course .start-btn:hover {
+      box-shadow: 0 5px 15px rgba(255, 215, 0, 0.4);
+    }
+
+    .purchased-course .start-btn:hover {
+      box-shadow: 0 5px 15px rgba(76, 175, 80, 0.4);
+    }
+
+    /* Stats Section */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+
+    .stat-card {
+      background: rgba(255, 255, 255, 0.9);
       padding: 1.5rem;
-      background-color: white;
-      border-top: 1px solid var(--gray);
+      border-radius: 15px;
+      text-align: center;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
     }
 
+    .stat-number {
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 0.5rem;
+    }
+
+    .stat-label {
+      color: #666;
+      font-size: 0.9rem;
+    }
+
+    /* Payment Modal */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0,0,0,0.5);
+      backdrop-filter: blur(5px);
+    }
+
+    .modal-content {
+      background: white;
+      margin: 5% auto;
+      padding: 2rem;
+      border-radius: 20px;
+      width: 90%;
+      max-width: 500px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+      position: relative;
+    }
+
+    .close-modal {
+      position: absolute;
+      right: 1rem;
+      top: 1rem;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: #666;
+    }
+
+    .payment-form {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .form-group label {
+      font-weight: 600;
+      color: var(--dark);
+    }
+
+    .form-group input {
+      padding: 1rem;
+      border: 2px solid #e0e0e0;
+      border-radius: 10px;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+    }
+
+    .form-group input:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(46, 134, 171, 0.1);
+    }
+
+    .payment-btn {
+      background: linear-gradient(135deg, var(--success), #45a049);
+      color: white;
+      border: none;
+      padding: 1rem;
+      border-radius: 10px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      margin-top: 1rem;
+    }
+
+    .payment-btn:hover:not(:disabled) {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(76, 175, 80, 0.4);
+    }
+
+    .payment-btn:disabled {
+      opacity: 0.7;
+      cursor: not-allowed;
+    }
+
+    .payment-methods {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.5rem;
+      margin: 1rem 0;
+    }
+
+    .payment-method {
+      border: 2px solid #e0e0e0;
+      border-radius: 10px;
+      padding: 1rem;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .payment-method.selected {
+      border-color: var(--primary);
+      background: rgba(46, 134, 171, 0.1);
+    }
+
+    .payment-method i {
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
+    }
+
+    /* Success Message */
+    .success-message {
+      background: linear-gradient(135deg, var(--success), #45a049);
+      color: white;
+      padding: 2rem;
+      border-radius: 15px;
+      text-align: center;
+      margin-bottom: 2rem;
+      display: none;
+    }
+
+    .success-message i {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+    }
+
+    /* My Courses Section */
+    .my-courses-section {
+      background: rgba(255, 255, 255, 0.95);
+      padding: 2rem;
+      border-radius: 20px;
+      margin-bottom: 2rem;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    }
+
+    .my-courses-section h2 {
+      color: var(--dark);
+      margin-bottom: 1.5rem;
+      font-size: 1.8rem;
+    }
+
+    .my-courses-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+    }
+
+    /* Responsive Design */
     @media (max-width: 768px) {
-      .container {
+      .dashboard-container {
         flex-direction: column;
       }
-      aside {
+      
+      .sidebar {
         width: 100%;
-        flex-direction: row;
-        justify-content: space-around;
+        order: 2;
+      }
+      
+      .main-content {
+        order: 1;
+      }
+      
+      .courses-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .section-header {
+        flex-direction: column;
+        gap: 1rem;
+        text-align: center;
+      }
+
+      .payment-methods {
+        grid-template-columns: 1fr;
       }
     }
   </style>
 </head>
 <body>
-
-  <header>
-    <div class="logo">📘 NextGen Learning Hub</div>
-   
-  </header>
-
-  <div class="container">
-    <aside>
-      <div>
-        <div class="nav-item active"><i class="fas fa-home"></i><span>Dashboard</span></div>
+  <div class="dashboard-container">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="logo-section">
+        <div class="logo">
+          <i class="fas fa-graduation-cap"></i>
+          <span>NextGen Learning</span>
+        </div>
       </div>
-      <button class="logout-btn" id="logoutBtn">Logout</button>
+
+      <div class="user-info">
+        <div class="user-avatar">
+          <i class="fas fa-user"></i>
+        </div>
+        <h3 id="userName">Welcome, Learner!</h3>
+        <p id="userEmailDisplay"></p>
+      </div>
+
+      <nav class="nav-menu">
+        <a href="#" class="nav-item active">
+          <i class="fas fa-home"></i>
+          <span>Dashboard</span>
+        </a>
+        <a href="#my-courses" class="nav-item">
+          <i class="fas fa-book"></i>
+          <span>My Courses</span>
+        </a>
+        <a href="#premium-courses" class="nav-item">
+          <i class="fas fa-crown"></i>
+          <span>Premium Courses</span>
+        </a>
+        <a href="#" class="nav-item">
+          <i class="fas fa-chart-line"></i>
+          <span>Progress</span>
+        </a>
+        <a href="#" class="nav-item">
+          <i class="fas fa-cog"></i>
+          <span>Settings</span>
+        </a>
+      </nav>
+
+      <button class="logout-btn" id="logoutBtn">
+        <i class="fas fa-sign-out-alt"></i>
+        Logout
+      </button>
     </aside>
 
-    <main>
-      <div class="section-header">
-        <h2>Explore Courses</h2>
-        <p>Choose a category to start learning</p>
+    <!-- Main Content -->
+    <main class="main-content">
+      <!-- Success Message -->
+      <div class="success-message" id="successMessage">
+        <i class="fas fa-check-circle"></i>
+        <h3 id="successTitle">Payment Successful!</h3>
+        <p id="successText">You have successfully enrolled in the course.</p>
       </div>
 
-      <div class="courses-grid">
-        <div class="course-box">
-          <h3>Language Course</h3>
-          <p>Improve communication skills in various languages</p>
-          <button onclick="window.location.href='language.html'">Start Here</button>
+      <div class="welcome-section">
+        <h1>Welcome Back! 👋</h1>
+        <p>Ready to continue your learning journey? Explore new courses and enhance your skills.</p>
+      </div>
+
+      <div class="search-section">
+        <div class="search-box">
+          <input type="text" id="searchInput" placeholder="Search for courses, skills, or topics...">
+          <button class="search-btn">
+            <i class="fas fa-search"></i>
+            Search
+          </button>
         </div>
-        <div class="course-box">
-          <h3>IT Course</h3>
-          <p>Learn web development, cybersecurity, and more</p>
-          <button onclick="window.location.href='it.html'">Start Here</button>
+      </div>
+
+      <!-- Super Admin Request Section -->
+      <div class="super-admin-section">
+        <div class="super-admin-icon">
+          <i class="fas fa-crown"></i>
         </div>
-        <div class="course-box">
-          <h3>Freelancing Course</h3>
-          <p>Master skills for online earning platforms</p>
-          <button onclick="window.location.href='freelancing.html'">Start Here</button>
+        <h3 style="color: var(--super-admin); margin-bottom: 0.5rem;">Become a Super Admin</h3>
+        <p style="color: #666; margin-bottom: 1rem; max-width: 500px; margin-left: auto; margin-right: auto;">
+          Get elevated permissions to manage users, upload courses, and access advanced analytics. 
+          Your request will be reviewed by the main administrator.
+        </p>
+        <button id="requestSuperAdminBtn" class="super-admin-btn">
+          <i class="fas fa-user-shield"></i> Request Super Admin Access
+        </button>
+        <p id="requestStatus" style="margin-top: 0.5rem; font-size: 0.9rem; color: #666;"></p>
+      </div>
+
+      <!-- My Courses Section -->
+      <div class="my-courses-section" id="my-courses">
+        <h2>🎓 My Purchased Courses</h2>
+        <div class="my-courses-grid" id="myCoursesGrid">
+          <div class="course-card purchased-course">
+            <div class="purchased-badge">PURCHASED</div>
+            <div class="course-icon">
+              <i class="fas fa-language"></i>
+            </div>
+            <h3>Language Course</h3>
+            <p>Master English and other languages with interactive lessons and real conversations</p>
+            <button class="start-btn">Continue Learning</button>
+          </div>
         </div>
-        <div class="course-box">
-          <h3>Skill Development</h3>
-          <p>Grow your personal and professional abilities</p>
-          <button onclick="window.location.href='skill.html'">Start Here</button>
+        <p id="noCoursesMessage" style="text-align: center; color: #666; display: none;">
+          You haven't purchased any premium courses yet. Explore our premium courses below!
+        </p>
+      </div>
+
+      <!-- Free Courses Section -->
+      <div class="courses-section">
+        <div class="section-header">
+          <h2>Free Courses</h2>
+          <button class="view-all-btn">View All</button>
         </div>
-        <div class="course-box">
-          <h3>Others</h3>
-          <p>Explore various topics to expand your knowledge</p>
-          <button onclick="window.location.href='other.html'">Start Here</button>
+        <div class="courses-grid">
+          <div class="course-card" onclick="window.location.href='language.html'">
+            <div class="course-icon">
+              <i class="fas fa-language"></i>
+            </div>
+            <h3>Language Course</h3>
+            <p>Master English and other languages with interactive lessons and real conversations</p>
+            <button class="start-btn">Start Learning</button>
+          </div>
+
+          <div class="course-card" onclick="window.location.href='it.html'">
+            <div class="course-icon">
+              <i class="fas fa-laptop-code"></i>
+            </div>
+            <h3>IT & Programming</h3>
+            <p>Learn web development, computer basics, and programming from scratch</p>
+            <button class="start-btn">Start Learning</button>
+          </div>
+
+          <div class="course-card" onclick="window.location.href='freelancing.html'">
+            <div class="course-icon">
+              <i class="fas fa-briefcase"></i>
+            </div>
+            <h3>Freelancing</h3>
+            <p>Build your online career with digital marketing and freelancing skills</p>
+            <button class="start-btn">Start Learning</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Premium Courses Section -->
+      <div class="courses-section" id="premium-courses">
+        <div class="section-header">
+          <h2>💎 Premium Courses</h2>
+          <button class="view-all-btn" onclick="window.location.href='premium-courses.html'">Explore All</button>
+        </div>
+        <div class="courses-grid" id="premiumCoursesGrid">
+          <!-- Premium courses will be loaded dynamically -->
+        </div>
+      </div>
+
+      <!-- More Free Courses -->
+      <div class="courses-section">
+        <div class="section-header">
+          <h2>More Free Courses</h2>
+          <button class="view-all-btn">View All</button>
+        </div>
+        <div class="courses-grid">
+          <div class="course-card" onclick="window.location.href='skill.html'">
+            <div class="course-icon">
+              <i class="fas fa-tools"></i>
+            </div>
+            <h3>Skill Development</h3>
+            <p>Enhance your professional and personal skills for career growth</p>
+            <button class="start-btn">Start Learning</button>
+          </div>
+
+          <div class="course-card" onclick="window.location.href='other.html'">
+            <div class="course-icon">
+              <i class="fas fa-star"></i>
+            </div>
+            <h3>Other Courses</h3>
+            <p>Explore cooking, driving, Python programming and various other skills</p>
+            <button class="start-btn">Explore More</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-number" id="totalCourses">8+</div>
+          <div class="stat-label">Course Categories</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number" id="freeVideos">50+</div>
+          <div class="stat-label">Free Videos</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number" id="premiumCourses">6+</div>
+          <div class="stat-label">Premium Courses</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">100%</div>
+          <div class="stat-label">Satisfaction</div>
         </div>
       </div>
     </main>
   </div>
 
-  <footer>
-    &copy; 2025 NextGen Learning Hub. All rights reserved.
-  </footer>
+  <!-- Payment Modal -->
+  <div id="paymentModal" class="modal">
+    <div class="modal-content">
+      <span class="close-modal" onclick="closePaymentModal()">&times;</span>
+      <h2>Complete Your Purchase</h2>
+      <div id="courseInfo" style="text-align: center; margin-bottom: 1.5rem;">
+        <h3 id="selectedCourse"></h3>
+        <div class="course-price" id="coursePrice"></div>
+      </div>
+      
+      <div class="payment-methods">
+        <div class="payment-method selected" onclick="selectPaymentMethod('card')">
+          <i class="fas fa-credit-card"></i>
+          <div>Card</div>
+        </div>
+        <div class="payment-method" onclick="selectPaymentMethod('paypal')">
+          <i class="fab fa-paypal"></i>
+          <div>PayPal</div>
+        </div>
+        <div class="payment-method" onclick="selectPaymentMethod('bkash')">
+          <i class="fas fa-mobile-alt"></i>
+          <div>bKash</div>
+        </div>
+      </div>
 
-<script>
+      <form class="payment-form" id="paymentForm">
+        <div class="form-group">
+          <label for="cardNumber">Card Number</label>
+          <input type="text" id="cardNumber" placeholder="1234 5678 9012 3456" required maxlength="19">
+        </div>
+        
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+          <div class="form-group">
+            <label for="expiryDate">Expiry Date</label>
+            <input type="text" id="expiryDate" placeholder="MM/YY" required maxlength="5">
+          </div>
+          <div class="form-group">
+            <label for="cvv">CVV</label>
+            <input type="text" id="cvv" placeholder="123" required maxlength="3">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="cardName">Name on Card</label>
+          <input type="text" id="cardName" placeholder="John Doe" required>
+        </div>
+
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" id="email" placeholder="your@email.com" required>
+        </div>
+
+        <button type="submit" class="payment-btn" id="payNowBtn">
+          <i class="fas fa-lock"></i> Pay Now
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    const API_BASE_URL = 'http://localhost:5000/api';
+    let currentUser = null;
+    let selectedCourse = null;
+    let selectedPrice = 0;
+    let selectedPaymentMethod = 'card';
+    let userCourses = [];
+    let hasPendingRequest = false;
+
     document.addEventListener('DOMContentLoaded', function () {
       const token = localStorage.getItem('token');
-      if (!token) {
+      const userEmail = localStorage.getItem('userEmail');
+      const userId = localStorage.getItem('userId');
+      
+      // ✅ STRICT AUTHENTICATION CHECK
+      if (!token || !userId) {
+        alert('Please login first');
         window.location.href = 'login.html';
         return;
       }
 
+      currentUser = { id: userId, email: userEmail };
+
+      // Display user info
+      document.getElementById('userName').textContent = `Welcome, ${userEmail.split('@')[0]}!`;
+      document.getElementById('userEmailDisplay').textContent = userEmail;
+      document.getElementById('email').value = userEmail;
+
+      // Load user data
+      loadUserCourses();
+      loadPremiumCourses();
+      checkSuperAdminRequestStatus();
+
+      // Logout functionality
       document.getElementById('logoutBtn').addEventListener('click', function () {
         localStorage.removeItem('token');
         localStorage.removeItem('userEmail');
+        localStorage.removeItem('userId');
         window.location.href = 'login.html';
       });
+
+      // Search functionality
+      document.querySelector('.search-btn').addEventListener('click', handleSearch);
+      document.getElementById('searchInput').addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') handleSearch();
+      });
+
+      // Payment form submission
+      document.getElementById('paymentForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        processPayment();
+      });
+
+      // Super Admin Request Button
+      document.getElementById('requestSuperAdminBtn').addEventListener('click', requestSuperAdminAccess);
+
+      // Format card number
+      document.getElementById('cardNumber').addEventListener('input', function(e) {
+        let value = e.target.value.replace(/\s+/g, '').replace(/[^0-9]/gi, '');
+        let matches = value.match(/\d{4,16}/g);
+        let match = matches && matches[0] || '';
+        let parts = [];
+        
+        for (let i = 0; i < match.length; i += 4) {
+          parts.push(match.substring(i, i + 4));
+        }
+        
+        if (parts.length) {
+          e.target.value = parts.join(' ');
+        } else {
+          e.target.value = value;
+        }
+      });
+
+      // Format expiry date
+      document.getElementById('expiryDate').addEventListener('input', function(e) {
+        let value = e.target.value.replace(/\D/g, '');
+        if (value.length >= 2) {
+          e.target.value = value.substring(0, 2) + '/' + value.substring(2, 4);
+        }
+      });
     });
+
+    // Check Super Admin Request Status
+    function checkSuperAdminRequestStatus() {
+      // In a real app, you would check with the server
+      // For now, we'll check localStorage
+      const hasRequested = localStorage.getItem(`superAdminRequest_${currentUser.id}`);
+      if (hasRequested) {
+        hasPendingRequest = true;
+        updateRequestButton();
+      }
+    }
+
+    // Update Super Admin Request Button
+    function updateRequestButton() {
+      const button = document.getElementById('requestSuperAdminBtn');
+      const status = document.getElementById('requestStatus');
+      
+      if (hasPendingRequest) {
+        button.innerHTML = '<i class="fas fa-clock"></i> Request Pending Review';
+        button.disabled = true;
+        status.textContent = 'Your request is under review by administrators';
+        status.style.color = '#f39c12';
+      } else {
+        button.innerHTML = '<i class="fas fa-user-shield"></i> Request Super Admin Access';
+        button.disabled = false;
+        status.textContent = '';
+      }
+    }
+
+    // Request Super Admin Access
+    function requestSuperAdminAccess() {
+      if (!currentUser || !currentUser.id) {
+        alert('Please login first');
+        return;
+      }
+
+      const name = prompt('Enter your full name for Super Admin request:');
+      if (!name) return;
+
+      const reason = prompt('Why do you want Super Admin access? (Optional)');
+      
+      // Show loading state
+      const button = document.getElementById('requestSuperAdminBtn');
+      const originalText = button.innerHTML;
+      button.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Submitting Request...';
+      button.disabled = true;
+
+      // Send request to server
+      fetch('http://localhost:5000/api/super-admin/request', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          userId: currentUser.id,
+          email: currentUser.email,
+          name: name,
+          reason: reason
+        })
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (data.success) {
+          // Request submitted successfully
+          hasPendingRequest = true;
+          localStorage.setItem(`superAdminRequest_${currentUser.id}`, 'pending');
+          updateRequestButton();
+          
+          // Show success message
+          alert('✅ Super Admin request submitted successfully!\n\nWait for administrator approval. You will be notified once approved.');
+        } else {
+          throw new Error(data.error || 'Request submission failed');
+        }
+      })
+      .catch(error => {
+        console.error('Request error:', error);
+        alert('Failed to submit request: ' + error.message);
+        button.innerHTML = originalText;
+        button.disabled = false;
+      });
+    }
+
+    async function loadUserCourses() {
+      try {
+        const response = await fetch(`${API_BASE_URL}/user/courses/${currentUser.id}`);
+        const data = await response.json();
+        
+        if (data.success) {
+          userCourses = data.courses;
+          displayUserCourses();
+        }
+      } catch (error) {
+        console.error('Error loading user courses:', error);
+      }
+    }
+
+    async function loadPremiumCourses() {
+      try {
+        const response = await fetch(`${API_BASE_URL}/courses`);
+        const data = await response.json();
+        
+        if (data.success) {
+          displayPremiumCourses(data.courses);
+        }
+      } catch (error) {
+        console.error('Error loading premium courses:', error);
+      }
+    }
+
+    function displayUserCourses() {
+      const container = document.getElementById('myCoursesGrid');
+      const noCoursesMessage = document.getElementById('noCoursesMessage');
+      
+      if (userCourses.length === 0) {
+        container.innerHTML = '';
+        noCoursesMessage.style.display = 'block';
+        return;
+      }
+      
+      noCoursesMessage.style.display = 'none';
+      
+      const coursesHTML = userCourses.map(course => `
+        <div class="course-card purchased-course">
+          <div class="purchased-badge">PURCHASED</div>
+          <div class="course-icon">
+            <i class="fas fa-graduation-cap"></i>
+          </div>
+          <h3>${course.name}</h3>
+          <p>${course.description}</p>
+          <div class="course-price">Purchased: ₹${course.amount_paid}</div>
+          <button class="start-btn" onclick="accessCourse(${course.id})">
+            <i class="fas fa-play"></i> Start Learning
+          </button>
+        </div>
+      `).join('');
+      
+      container.innerHTML = coursesHTML;
+    }
+
+    function displayPremiumCourses(courses) {
+      const container = document.getElementById('premiumCoursesGrid');
+      
+      const coursesHTML = courses.map(course => {
+        const hasPurchased = userCourses.some(uc => uc.id === course.id);
+        
+        return `
+          <div class="course-card premium-course ${hasPurchased ? 'purchased-course' : ''}">
+            ${hasPurchased ? '<div class="purchased-badge">PURCHASED</div>' : '<div class="premium-badge">PREMIUM</div>'}
+            <div class="course-icon">
+              <i class="fas fa-graduation-cap"></i>
+            </div>
+            <h3>${course.name}</h3>
+            <p>${course.description}</p>
+            <div class="course-price">₹${course.price}</div>
+            <button class="start-btn" onclick="${hasPurchased ? `accessCourse(${course.id})` : `showPaymentModal(${course.id}, '${course.name}', ${course.price})`}">
+              ${hasPurchased ? '<i class="fas fa-play"></i> Start Learning' : '<i class="fas fa-crown"></i> Enroll Now'}
+            </button>
+          </div>
+        `;
+      }).join('');
+      
+      container.innerHTML = coursesHTML;
+    }
+
+    function showPaymentModal(courseId, courseName, price) {
+      selectedCourse = { id: courseId, name: courseName, price: price };
+      selectedPrice = price;
+      
+      document.getElementById('selectedCourse').textContent = courseName;
+      document.getElementById('coursePrice').textContent = `₹${price.toLocaleString()}`;
+      document.getElementById('paymentModal').style.display = 'block';
+    }
+
+    function closePaymentModal() {
+      document.getElementById('paymentModal').style.display = 'none';
+      document.getElementById('paymentForm').reset();
+      selectedCourse = null;
+    }
+
+    function selectPaymentMethod(method) {
+      selectedPaymentMethod = method;
+      document.querySelectorAll('.payment-method').forEach(el => {
+        el.classList.remove('selected');
+      });
+      event.currentTarget.classList.add('selected');
+    }
+
+    async function processPayment() {
+      const cardNumber = document.getElementById('cardNumber').value.replace(/\s/g, '');
+      const expiryDate = document.getElementById('expiryDate').value;
+      const cvv = document.getElementById('cvv').value;
+      const cardName = document.getElementById('cardName').value;
+      const email = document.getElementById('email').value;
+
+      // Validation
+      if (!cardNumber || !expiryDate || !cvv || !cardName || !email) {
+        alert('Please fill in all payment details');
+        return;
+      }
+
+      if (cardNumber.length < 16) {
+        alert('Please enter a valid card number');
+        return;
+      }
+
+      if (!expiryDate.match(/^\d{2}\/\d{2}$/)) {
+        alert('Please enter a valid expiry date (MM/YY)');
+        return;
+      }
+
+      if (cvv.length !== 3) {
+        alert('Please enter a valid CVV');
+        return;
+      }
+
+      // Show loading state
+      const payBtn = document.getElementById('payNowBtn');
+      const originalText = payBtn.innerHTML;
+      payBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
+      payBtn.disabled = true;
+
+      try {
+        const paymentData = {
+          userId: currentUser.id,
+          courseId: selectedCourse.id,
+          amount: selectedCourse.price,
+          paymentMethod: selectedPaymentMethod,
+          cardLast4: cardNumber.slice(-4),
+          transactionId: `TXN${Date.now()}${Math.random().toString(36).substr(2, 9)}`
+        };
+
+        const response = await fetch(`${API_BASE_URL}/payment/process`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(paymentData)
+        });
+
+        const data = await response.json();
+
+        if (response.ok && data.success) {
+          // Payment successful
+          payBtn.innerHTML = '<i class="fas fa-check"></i> Payment Successful!';
+          payBtn.style.background = 'linear-gradient(135deg, #4CAF50, #45a049)';
+          
+          setTimeout(() => {
+            closePaymentModal();
+            payBtn.innerHTML = originalText;
+            payBtn.disabled = false;
+            payBtn.style.background = 'linear-gradient(135deg, #4CAF50, #45a049)';
+            
+            // Show success message
+            showSuccessMessage(selectedCourse.name, data.transactionId);
+            
+            // Reload user courses
+            loadUserCourses();
+            loadPremiumCourses();
+          }, 1500);
+        } else {
+          throw new Error(data.error || 'Payment failed');
+        }
+      } catch (error) {
+        console.error('Payment error:', error);
+        alert(error.message || 'Payment failed. Please try again.');
+        payBtn.innerHTML = originalText;
+        payBtn.disabled = false;
+      }
+    }
+
+    function showSuccessMessage(courseName, transactionId) {
+      const successMessage = document.getElementById('successMessage');
+      const successTitle = document.getElementById('successTitle');
+      const successText = document.getElementById('successText');
+      
+      successTitle.textContent = '🎉 Payment Successful!';
+      successText.textContent = `You have successfully enrolled in "${courseName}". Transaction ID: ${transactionId}`;
+      successMessage.style.display = 'block';
+      
+      // Scroll to success message
+      successMessage.scrollIntoView({ behavior: 'smooth' });
+      
+      // Hide success message after 10 seconds
+      setTimeout(() => {
+        successMessage.style.display = 'none';
+      }, 10000);
+    }
+
+    function accessCourse(courseId) {
+      alert(`Accessing course ID: ${courseId}. Course content will be available here!`);
+      // In a real application, you would redirect to the course page
+    }
+
+    function handleSearch() {
+      const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+      if (searchTerm) {
+        if (searchTerm.includes('language') || searchTerm.includes('english')) {
+          window.location.href = 'language.html';
+        } else if (searchTerm.includes('programming') || searchTerm.includes('it') || searchTerm.includes('computer')) {
+          window.location.href = 'it.html';
+        } else if (searchTerm.includes('freelancing') || searchTerm.includes('marketing')) {
+          window.location.href = 'freelancing.html';
+        } else if (searchTerm.includes('skill') || searchTerm.includes('development')) {
+          window.location.href = 'skill.html';
+        } else if (searchTerm.includes('premium') || searchTerm.includes('paid')) {
+          document.getElementById('premium-courses').scrollIntoView({ behavior: 'smooth' });
+        } else if (searchTerm.includes('my course') || searchTerm.includes('purchased')) {
+          document.getElementById('my-courses').scrollIntoView({ behavior: 'smooth' });
+        } else if (searchTerm.includes('super admin') || searchTerm.includes('admin')) {
+          document.querySelector('.super-admin-section').scrollIntoView({ behavior: 'smooth' });
+        } else {
+          window.location.href = 'other.html';
+        }
+      }
+    }
+
+    // Close modal when clicking outside
+    window.onclick = function(event) {
+      const modal = document.getElementById('paymentModal');
+      if (event.target === modal) {
+        closePaymentModal();
+      }
+    }
   </script>
 </body>
 </html>

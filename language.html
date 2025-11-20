@@ -3,165 +3,237 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Dashboard - NextGen Learning Hub</title>
+  <title>English Language Course - NextGen Learning Hub</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
   <style>
     :root {
-      --primary: #0a130a;
-      --light-bg: #f3faff;
-      --card-bg: #ffffff;
-      --video-bg: #e6f2ff;
-      --text-dark: #1a1a1a;
+      --primary: #2E86AB;
+      --secondary: #A23B72;
+      --accent: #F18F01;
+      --dark: #2D3047;
+      --light: #F8F9FA;
     }
 
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      font-family: 'Poppins', 'Segoe UI', sans-serif;
     }
 
     body {
-      background: linear-gradient(to right, #dbeafe, #fff);
-      color: var(--text-dark);
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
     }
 
-    header {
-      background-color: #d67f7f;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-      padding: 1rem 2rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .logo {
-      font-size: 1.6rem;
-      font-weight: bold;
-      color: var(--primary);
-      display: flex;
-      align-items: center;
-    }
-
-    main {
+    .course-header {
+      background: rgba(255, 255, 255, 0.95);
       padding: 2rem;
-    }
-
-    .section-header {
       text-align: center;
       margin-bottom: 2rem;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
     }
 
-    .section-header h2 {
-      font-size: 2rem;
-      margin-bottom: 0.5rem;
+    .course-header h1 {
+      font-size: 2.5rem;
+      background: linear-gradient(45deg, var(--primary), var(--secondary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 1rem;
     }
 
-    .section-header p {
+    .search-section {
+      background: white;
+      padding: 1.5rem;
+      border-radius: 15px;
+      margin: 0 2rem 2rem 2rem;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+    }
+
+    .search-box {
+      display: flex;
+      gap: 1rem;
+    }
+
+    .search-box input {
+      flex: 1;
+      padding: 1rem 1.5rem;
+      border: 2px solid #e0e0e0;
+      border-radius: 12px;
       font-size: 1rem;
-      color: #444;
     }
 
-    .video-grid {
+    .search-box input:focus {
+      outline: none;
+      border-color: var(--primary);
+    }
+
+    .search-btn {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: white;
+      border: none;
+      padding: 1rem 2rem;
+      border-radius: 12px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    .videos-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
       gap: 2rem;
+      padding: 0 2rem 2rem 2rem;
     }
 
     .video-card {
-      background-color: var(--video-bg);
-      padding: 1rem;
-      border-radius: 10px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+      transition: all 0.3s ease;
+    }
+
+    .video-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.2);
     }
 
     .video-card iframe {
       width: 100%;
       height: 200px;
-      border-radius: 8px;
+      border: none;
     }
 
-    .video-card h4 {
-      margin-top: 0.8rem;
-      color: var(--primary);
-    }
-
-    .video-card p {
-      font-size: 0.9rem;
-      color: #555;
-    }
-
-    footer {
-      text-align: center;
+    .video-info {
       padding: 1.5rem;
-      background-color: white;
-      border-top: 1px solid #ccc;
-      margin-top: 2rem;
     }
 
-    @media (max-width: 768px) {
-      .video-card iframe {
-        height: 180px;
-      }
+    .video-info h3 {
+      color: var(--dark);
+      margin-bottom: 0.5rem;
+    }
+
+    .video-info p {
+      color: #666;
+      line-height: 1.6;
+    }
+
+    .back-btn {
+      position: fixed;
+      top: 2rem;
+      left: 2rem;
+      background: white;
+      border: none;
+      padding: 1rem;
+      border-radius: 50%;
+      cursor: pointer;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      transition: all 0.3s ease;
+    }
+
+    .back-btn:hover {
+      transform: scale(1.1);
     }
   </style>
 </head>
 <body>
+  <button class="back-btn" onclick="window.location.href='dashboard.html'">
+    <i class="fas fa-arrow-left"></i>
+  </button>
 
-  <header>
-    <div class="logo">📘 NextGen Learning Hub</div>
-  </header>
+  <div class="course-header">
+    <h1>🎓 English Language Course</h1>
+    <p>Master English with interactive lessons, real conversations, and vocabulary building</p>
+  </div>
 
-  <main>
-    <div class="section-header">
-      <h2>Learn English with Videos</h2>
-      <p>Watch and improve your English through real conversations and lessons</p>
+  <div class="search-section">
+    <div class="search-box">
+      <input type="text" id="courseSearch" placeholder="Search English lessons, vocabulary, grammar...">
+      <button class="search-btn" onclick="searchVideos()">
+        <i class="fas fa-search"></i>
+        Search
+      </button>
     </div>
+  </div>
 
-    <div class="video-grid">
+  <div class="videos-grid" id="videosContainer">
+    <!-- Videos will be dynamically loaded here -->
+  </div>
 
-      <div class="video-card">
-        <iframe src="https://www.youtube.com/embed/WMokf0EgTcA" frameborder="0" allowfullscreen></iframe>
-        <h4>BBC Learning English – “Wellbeing” Vocabulary</h4>
-        <p>30-minute vocabulary session focused on wellbeing topics.</p>
-      </div>
+  <script>
+    const courseVideos = [
+      {
+        title: "BBC Learning English - Wellbeing Vocabulary",
+        description: "30-minute vocabulary session focused on wellbeing topics",
+        url: "https://www.youtube.com/embed/WMokf0EgTcA"
+      },
+      {
+        title: "BBC Learning English - All About Language", 
+        description: "6-Minute English session covering new vocabulary and usage",
+        url: "https://www.youtube.com/embed/fcN0BXzK8bg"
+      },
+      {
+        title: "The Country That Measures Happiness",
+        description: "Insightful vocabulary and listening practice",
+        url: "https://www.youtube.com/embed/COB_5wL_xv4"
+      },
+      {
+        title: "EnglishClass101 - Fast Conversations Practice",
+        description: "Practice understanding fast, natural English speech",
+        url: "https://www.youtube.com/embed/jb_3zB9_xSk"
+      },
+      {
+        title: "2.5 Hours English Conversation Practice",
+        description: "Extended listening and speaking practice at beginner level",
+        url: "https://www.youtube.com/embed/VxjFEj0dx18"
+      },
+      {
+        title: "Get Started with English Like a Pro",
+        description: "Beginner-friendly course with basic conversational phrases",
+        url: "https://www.youtube.com/embed/opDoMdKL7CI"
+      }
+    ];
 
-      <div class="video-card">
-        <iframe src="https://www.youtube.com/embed/fcN0BXzK8bg" frameborder="0" allowfullscreen></iframe>
-        <h4>BBC Learning English – “All About Language”</h4>
-        <p>A 6‑Minute English session covering new vocabulary and usage.</p>
-      </div>
+    function loadVideos() {
+      const container = document.getElementById('videosContainer');
+      container.innerHTML = courseVideos.map(video => `
+        <div class="video-card">
+          <iframe src="${video.url}" allowfullscreen></iframe>
+          <div class="video-info">
+            <h3>${video.title}</h3>
+            <p>${video.description}</p>
+          </div>
+        </div>
+      `).join('');
+    }
 
-      <div class="video-card">
-        <iframe src="https://www.youtube.com/embed/COB_5wL_xv4" frameborder="0" allowfullscreen></iframe>
-        <h4>BBC Learning English – The country that measures happiness</h4>
-        <p>Insightful vocabulary and listening practice in a compact episode.</p>
-      </div>
+    function searchVideos() {
+      const searchTerm = document.getElementById('courseSearch').value.toLowerCase();
+      const filteredVideos = courseVideos.filter(video => 
+        video.title.toLowerCase().includes(searchTerm) || 
+        video.description.toLowerCase().includes(searchTerm)
+      );
+      
+      const container = document.getElementById('videosContainer');
+      container.innerHTML = filteredVideos.map(video => `
+        <div class="video-card">
+          <iframe src="${video.url}" allowfullscreen></iframe>
+          <div class="video-info">
+            <h3>${video.title}</h3>
+            <p>${video.description}</p>
+          </div>
+        </div>
+      `).join('');
+    }
 
-      <div class="video-card">
-        <iframe src="https://www.youtube.com/embed/jb_3zB9_xSk" frameborder="0" allowfullscreen></iframe>
-        <h4>EnglishClass101 – Fast Conversations Practice</h4>
-        <p>Practice understanding fast, natural English speech.</p>
-      </div>
-
-      <div class="video-card">
-        <iframe src="https://www.youtube.com/embed/VxjFEj0dx18" frameborder="0" allowfullscreen></iframe>
-        <h4>EnglishClass101 – 2.5 Hours Conversation Practice</h4>
-        <p>Extended listening and speaking practice at beginner level.</p>
-      </div>
-
-      <div class="video-card">
-        <iframe src="https://www.youtube.com/embed/opDoMdKL7CI" frameborder="0" allowfullscreen></iframe>
-        <h4>EnglishClass101 – Get Started Like a Pro</h4>
-        <p>Beginner-friendly course with basic conversational phrases.</p>
-      </div>
-
-    </div>
-  </main>
-
-  <footer>
-    &copy; 2025 NextGen Learning Hub. All rights reserved.
-  </footer>
-
+    document.addEventListener('DOMContentLoaded', loadVideos);
+    
+    // Enter key support
+    document.getElementById('courseSearch').addEventListener('keypress', function(e) {
+      if (e.key === 'Enter') {
+        searchVideos();
+      }
+    });
+  </script>
 </body>
 </html>

@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email Verification - NextGen Learning Hub</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .verification-container {
+            background: white;
+            border-radius: 20px;
+            padding: 3rem;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            text-align: center;
+            max-width: 500px;
+            width: 100%;
+        }
+
+        .verification-icon {
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .icon-success { color: #4CAF50; }
+        .icon-error { color: #e74c3c; }
+        .icon-loading { color: #3498db; }
+
+        .verification-title {
+            color: #333;
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .verification-message {
+            color: #666;
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 2rem;
+        }
+
+        .verify-btn {
+            background: linear-gradient(135deg, #4CAF50, #45a049);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 1.5rem;
+        }
+
+        .verify-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(76, 175, 80, 0.4);
+        }
+
+        .verify-btn:disabled {
+            background: #cccccc;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .status-message {
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            font-weight: 600;
+        }
+
+        .status-success {
+            background: #d5f4e6;
+            color: #27ae60;
+            border: 1px solid #27ae60;
+        }
+
+        .status-error {
+            background: #fdebd0;
+            color: #e74c3c;
+            border: 1px solid #e74c3c;
+        }
+
+        .status-loading {
+            background: #e3f2fd;
+            color: #1976d2;
+            border: 1px solid #1976d2;
+        }
+
+        .login-link {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+            margin-top: 1rem;
+            display: inline-block;
+            padding: 0.8rem 1.5rem;
+            border: 2px solid #667eea;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .login-link:hover {
+            background: #667eea;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .loading-spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid #ffffff;
+            border-radius: 50%;
+            border-top-color: transparent;
+            animation: spin 1s ease-in-out infinite;
+            margin-right: 10px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="verification-container">
+        <div class="verification-icon icon-loading" id="verificationIcon">
+            <i class="fas fa-envelope"></i>
+        </div>
+        
+        <h1 class="verification-title" id="verificationTitle">Email Verification</h1>
+        
+        <p class="verification-message" id="verificationMessage">
+            We are verifying your email address. Please wait...
+        </p>
+
+        <div id="statusMessage"></div>
+
+        <button class="verify-btn" id="verifyBtn" onclick="verifyEmail()" style="display: none;">
+            <i class="fas fa-check-circle"></i> Confirm Verification
+        </button>
+
+        <div id="successContent" style="display: none;">
+            <div class="status-message status-success">
+                <i class="fas fa-check-circle"></i> 
+                <span id="successMessage">Email verified successfully!</span>
+            </div>
+            <a href="login.html" class="login-link">
+                <i class="fas fa-sign-in-alt"></i> Proceed to Login
+            </a>
+        </div>
+
+        <div id="errorContent" style="display: none;">
+            <div class="status-message status-error">
+                <i class="fas fa-exclamation-circle"></i> 
+                <span id="errorMessage">Verification failed!</span>
+            </div>
+            <a href="login.html" class="login-link">
+                <i class="fas fa-arrow-left"></i> Back to Login
+            </a>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        function getUrlParameter(name) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(name);
+        }
+
+        function showLoading() {
+            $('#verificationIcon').html('<i class="fas fa-spinner fa-spin"></i>');
+            $('#verificationTitle').text('Verifying Email...');
+            $('#verificationMessage').text('Please wait while we verify your email address.');
+        }
+
+        function showSuccess(message) {
+            $('#verificationIcon').removeClass('icon-loading').addClass('icon-success').html('<i class="fas fa-check-circle"></i>');
+            $('#verificationTitle').text('Verification Successful!');
+            $('#verificationMessage').hide();
+            $('#verifyBtn').hide();
+            $('#statusMessage').hide();
+            $('#successMessage').text(message);
+            $('#successContent').show();
+        }
+
+        function showError(message) {
+            $('#verificationIcon').removeClass('icon-loading').addClass('icon-error').html('<i class="fas fa-exclamation-circle"></i>');
+            $('#verificationTitle').text('Verification Failed');
+            $('#verificationMessage').hide();
+            $('#verifyBtn').hide();
+            $('#statusMessage').hide();
+            $('#errorMessage').text(message);
+            $('#errorContent').show();
+        }
+
+        function showManualVerify() {
+            $('#verificationIcon').removeClass('icon-loading').html('<i class="fas fa-envelope"></i>');
+            $('#verificationTitle').text('Confirm Your Email');
+            $('#verificationMessage').text('Click the button below to verify your email address and activate your account.');
+            $('#verifyBtn').show();
+        }
+
+        function verifyEmail() {
+            const token = getUrlParameter('token');
+            
+            if (!token) {
+                showError('Invalid verification link. No token found.');
+                return;
+            }
+
+            const verifyBtn = $('#verifyBtn');
+            verifyBtn.prop('disabled', true);
+            verifyBtn.html('<span class="loading-spinner"></span> Verifying...');
+
+            showLoading();
+
+            $.ajax({
+                url: '/api/auth/confirm-verify',
+                method: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify({ token: token }),
+                success: function(response) {
+                    if (response.success) {
+                        showSuccess(response.message);
+                    } else {
+                        showError(response.error);
+                    }
+                },
+                error: function(xhr) {
+                    const error = xhr.responseJSON ? xhr.responseJSON.error : 'Verification failed. Please try again.';
+                    showError(error);
+                }
+            });
+        }
+
+        // Auto-verify if token is present
+        $(document).ready(function() {
+            const token = getUrlParameter('token');
+            if (token) {
+                console.log('Token found, auto-verifying...');
+                verifyEmail();
+            } else {
+                showError('Invalid verification link. No verification token found.');
+            }
+        });
+    </script>
+</body>
+</html>

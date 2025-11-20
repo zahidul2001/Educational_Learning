@@ -4,226 +4,444 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Login - NextGen Learning Hub</title>
-  <link rel="stylesheet" href="style.css" />
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #f2f2f2;
+    * {
       margin: 0;
       padding: 0;
+      box-sizing: border-box;
     }
 
-    header {
-      background-color: #4CAF50;
-      padding: 1rem;
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .login-container {
+      width: 100%;
+      max-width: 420px;
+    }
+
+    .login-header {
       text-align: center;
+      margin-bottom: 2rem;
       color: white;
-      font-size: 1.2rem;
     }
 
-    .main-content {
-      padding: 2rem;
-      text-align: center;
+    .login-header h1 {
+      font-size: 2.5rem;
+      margin-bottom: 0.5rem;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    }
+
+    .login-header .description {
+      font-size: 1.1rem;
+      opacity: 0.9;
     }
 
     .form-section {
-      max-width: 400px;
-      margin: 2rem auto;
-      padding: 2rem;
-      background: white;
-      border-radius: 8px;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
+      padding: 2.5rem;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.3);
     }
 
-    .register-form, .login-form {
+    .form-section h2 {
+      text-align: center;
+      margin-bottom: 1.5rem;
+      color: #333;
+      font-size: 1.8rem;
+      font-weight: 600;
+    }
+
+    .login-form {
       display: flex;
       flex-direction: column;
-      gap: 1rem;
+      gap: 1.2rem;
     }
 
-    input {
-      padding: 0.8rem;
-      border: 1px solid #ddd;
-      border-radius: 4px;
+    .input-group {
+      position: relative;
+    }
+
+    .input-group i {
+      position: absolute;
+      left: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #666;
+    }
+
+    .login-form input {
+      padding: 1rem 1rem 1rem 3rem;
+      border: 2px solid #e1e5e9;
+      border-radius: 12px;
       font-size: 1rem;
+      transition: all 0.3s ease;
+      width: 100%;
+      background: #f8f9fa;
     }
 
-    button {
-      padding: 0.8rem;
-      background-color: #4CAF50;
+    .login-form input:focus {
+      outline: none;
+      border-color: #667eea;
+      background: white;
+      box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+    }
+
+    .login-form button[type="submit"] {
+      padding: 1rem;
+      background: linear-gradient(135deg, #667eea, #764ba2);
       color: white;
       border: none;
-      border-radius: 4px;
+      border-radius: 12px;
       cursor: pointer;
-      font-size: 1rem;
-      transition: background-color 0.3s;
+      font-size: 1.1rem;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      margin-top: 0.5rem;
     }
 
-    button:hover {
-      background-color: #45a049;
+    .login-form button[type="submit"]:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 7px 20px rgba(102, 126, 234, 0.4);
+    }
+
+    .login-form button[type="submit"]:disabled {
+      opacity: 0.7;
+      transform: none;
+      box-shadow: none;
     }
 
     .or-text {
       text-align: center;
-      margin: 1rem 0;
+      margin: 1.5rem 0;
       color: #666;
+      position: relative;
+    }
+
+    .or-text::before,
+    .or-text::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      width: 45%;
+      height: 1px;
+      background: #ddd;
+    }
+
+    .or-text::before {
+      left: 0;
+    }
+
+    .or-text::after {
+      right: 0;
     }
 
     .signup-button {
-      background-color: transparent;
-      color: #4CAF50;
-      border: 1px solid #4CAF50;
+      width: 100%;
+      padding: 1rem;
+      background: transparent;
+      color: #667eea;
+      border: 2px solid #667eea;
+      border-radius: 12px;
+      cursor: pointer;
+      font-size: 1rem;
+      font-weight: 600;
+      transition: all 0.3s ease;
     }
 
     .signup-button:hover {
-      background-color: #f8f8f8;
+      background: #667eea;
+      color: white;
+      transform: translateY(-2px);
+    }
+
+    .admin-options {
+      text-align: center;
+      margin-top: 2rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid #e1e5e9;
+    }
+
+    .admin-options p {
+      color: #666;
+      margin-bottom: 1rem;
+      font-weight: 500;
+    }
+
+    .admin-links {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .admin-link {
+      color: white;
+      text-decoration: none;
+      font-weight: 600;
+      padding: 0.7rem 1.2rem;
+      border-radius: 25px;
+      transition: all 0.3s ease;
+      font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .admin-link.admin-login {
+      background: linear-gradient(135deg, #1a2a6c, #2c3e50);
+    }
+
+    .admin-link.super-admin-login {
+      background: linear-gradient(135deg, #8E2DE2, #4A00E0);
+    }
+
+    .admin-link:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
     }
 
     footer {
       text-align: center;
-      padding: 1rem;
       margin-top: 2rem;
-      font-size: 0.9rem;
-      color: #777;
-    }
-
-    a {
-      color: #4CAF50;
-      text-decoration: none;
+      color: rgba(255, 255, 255, 0.8);
       font-size: 0.9rem;
     }
 
-    a:hover {
-      text-decoration: underline;
+    /* Responsive Design */
+    @media (max-width: 480px) {
+      .form-section {
+        padding: 2rem 1.5rem;
+      }
+      
+      .login-header h1 {
+        font-size: 2rem;
+      }
+      
+      .admin-links {
+        flex-direction: column;
+        align-items: center;
+      }
+      
+      .admin-link {
+        width: 200px;
+        text-align: center;
+      }
+    }
+
+    /* Animation for form */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .form-section {
+      animation: fadeInUp 0.6s ease-out;
+    }
+
+    /* Error message styles */
+    .error-message {
+      color: #e74c3c;
+      font-size: 0.9rem;
+      margin-top: 0.5rem;
+      text-align: center;
+      padding: 0.5rem;
+      background: #fde8e6;
+      border-radius: 5px;
+      border: 1px solid #e74c3c;
+    }
+
+    .success-message {
+      color: #27ae60;
+      font-size: 0.9rem;
+      margin-top: 0.5rem;
+      text-align: center;
+      padding: 0.5rem;
+      background: #eafaf1;
+      border-radius: 5px;
+      border: 1px solid #27ae60;
+    }
+
+    /* Super Admin Info */
+    .super-admin-info {
+      background: linear-gradient(135deg, #8E2DE2, #4A00E0);
+      color: white;
+      padding: 1rem;
+      border-radius: 10px;
+      margin-top: 1rem;
+      text-align: center;
+      font-size: 0.8rem;
+    }
+
+    .super-admin-info i {
+      font-size: 1rem;
+      margin-right: 0.5rem;
     }
   </style>
 </head>
 <body>
-
-  <header>
-    <div class="logo">📘 NextGen Learning Hub</div>
-  </header>
-
-  <main class="main-content">
-    <h1>Welcome Back to NextGen Learning Hub</h1>
-    <p class="description">
-      Continue your learning journey with access to all your courses and progress.
-    </p>
+  <div class="login-container">
+    <div class="login-header">
+      <h1>Welcome Back! 👋</h1>
+      <p class="description">
+        Continue your learning journey with access to all your courses and progress.
+      </p>
+    </div>
 
     <div class="form-section">
-      <h2>Sign In</h2>
+      <h2>Sign In to Your Account</h2>
+      
+      <!-- Messages Container -->
+      <div id="loginMessages"></div>
+
       <form id="loginForm" class="login-form">
-        <input type="email" name="email" placeholder="Email" required />
-        <input type="password" name="password" placeholder="Password" required />
+        <div class="input-group">
+          <i class="fas fa-envelope"></i>
+          <input type="email" name="email" placeholder="Enter your email" required />
+        </div>
+        <div class="input-group">
+          <i class="fas fa-lock"></i>
+          <input type="password" name="password" placeholder="Enter your password" required />
+        </div>
         <button type="submit">Sign In</button>
       </form>
 
-      <p style="text-align: right; margin: 0;">
-        <a href="#" id="forgotLink">Forgot Password?</a>
-      </p>
+      <p class="or-text">or continue with</p>
 
-      <!-- Password Reset Form -->
-      <div id="forgotForm" style="display: none; margin-top: 1rem;" class="login-form">
-        <input type="email" id="resetEmail" placeholder="Enter your email" required />
-        <input type="password" id="newPassword" placeholder="Enter new password" required />
-        <input type="password" id="confirmPassword" placeholder="Confirm new password" required />
-        <button type="button" id="resetBtn">Reset Password</button>
+      <button class="signup-button" onclick="location.href='a.html'">
+        <i class="fas fa-user-plus"></i> Create New Account
+      </button>
+
+      <div class="admin-options">
+        <p>Administrator Access</p>
+        <div class="admin-links">
+          <a href="admin-login.html" class="admin-link admin-login">
+            <i class="fas fa-user-shield"></i> Admin Login
+          </a>
+          <a href="super-admin-login.html" class="admin-link super-admin-login">
+            <i class="fas fa-crown"></i> Super Admin Login
+          </a>
+        </div>
+        
+        <!-- Super Admin Information -->
+        <div class="super-admin-info">
+          <i class="fas fa-info-circle"></i>
+          Super Admin access requires approval. Request access from your dashboard after registration.
+        </div>
       </div>
-
-      <p class="or-text">— OR —</p>
-
-      <button class="signup-button" onclick="location.href='a.html'">Need an account? Sign Up</button>
+      
     </div>
-  </main>
+  </div>
 
   <footer>
     &copy; 2025 NextGen Learning Hub. Empowering Education for Everyone.
   </footer>
 
   <script>
+    const API_BASE_URL = 'http://localhost:5000/api/auth';
+
     $(document).ready(function () {
+      // Check for registration success message
+      const urlParams = new URLSearchParams(window.location.search);
+      if (urlParams.get('message') === 'registration_success') {
+        showLoginMessage('Registration successful! You can now login.', 'success');
+      }
+
       // Handle login form submission
       $('#loginForm').submit(function (e) {
         e.preventDefault();
 
-        const email = $('input[name="email"]').val();
+        const email = $('input[name="email"]').val().trim();
         const password = $('input[name="password"]').val();
+        
+        if (!email || !password) {
+          showLoginMessage('Please enter both email and password.', 'error');
+          return;
+        }
+
+        // Clear previous messages
+        $('#loginMessages').empty();
+
         const submitBtn = $(this).find('button[type="submit"]');
         const originalText = submitBtn.text();
         submitBtn.text('Signing in...').prop('disabled', true);
 
+        console.log('Attempting user login for:', email);
+
+        // User login
         $.ajax({
-          url: '/api/auth/login',
+          url: `${API_BASE_URL}/login`,
           method: 'POST',
           contentType: 'application/json',
-          data: JSON.stringify({ email, password }),
-          success: function(res) {
-            if(res.success){
-              // Token save করো localStorage এ
-              localStorage.setItem('token', res.token);
-              localStorage.setItem('userEmail', res.email);
-              window.location.href = 'dashboard.html';
+          data: JSON.stringify({ 
+            email: email, 
+            password: password 
+          }),
+          success: function(data) {
+            console.log('User login response:', data);
+            if (data.success) {
+              // ✅ ALL USER DATA STORED IN LOCALSTORAGE
+              localStorage.setItem('token', data.token);
+              localStorage.setItem('userEmail', data.user.email);
+              localStorage.setItem('userId', data.user.id); // ✅ userId store করা হচ্ছে
+              
+              showLoginMessage('Login successful! Redirecting...', 'success');
+              setTimeout(() => {
+                window.location.href = 'dashboard.html';
+              }, 1000);
             } else {
-              alert(res.error || 'Login failed. Please check your credentials.');
+              showLoginMessage(data.error || 'Login failed. Please try again.', 'error');
+              submitBtn.text(originalText).prop('disabled', false);
             }
           },
-          error: function(err){
-            console.error('Login error:', err);
-            alert('An error occurred. Please try again.');
-          },
-          complete: function () {
+          error: function(xhr, status, error) {
+            console.error('User login error:', xhr.responseJSON);
+            
+            if (xhr.status === 400) {
+              const errorMsg = xhr.responseJSON?.error || 'Invalid email or password.';
+              showLoginMessage(errorMsg, 'error');
+            } else {
+              showLoginMessage('Network error. Please check if server is running.', 'error');
+            }
+            
             submitBtn.text(originalText).prop('disabled', false);
           }
         });
       });
 
-      // Toggle forgot password form
-      $('#forgotLink').click(function (e) {
-        e.preventDefault();
-        $('#forgotForm').slideToggle();
-      });
-
-      // Handle password reset
-      $('#resetBtn').click(function () {
-        const email = $('#resetEmail').val();
-        const newPassword = $('#newPassword').val();
-        const confirmPassword = $('#confirmPassword').val();
-
-        if (!email || !newPassword || !confirmPassword) {
-          alert('Please fill out all fields.');
-          return;
+      function showLoginMessage(message, type) {
+        const messageClass = type === 'error' ? 'error-message' : 'success-message';
+        $('#loginMessages').html(`
+          <div class="${messageClass}">
+            ${message}
+          </div>
+        `);
+        
+        // Auto-hide success messages after 5 seconds
+        if (type === 'success') {
+          setTimeout(() => {
+            $('#loginMessages').empty();
+          }, 5000);
         }
-
-        if (newPassword !== confirmPassword) {
-          alert('Passwords do not match.');
-          return;
-        }
-
-        $.ajax({
-          url: 'http://localhost:5000/api/auth/reset-password',
-          type: 'POST',
-          contentType: 'application/json',
-          data: JSON.stringify({ email, newPassword }),
-          success: function (response) {
-            if (response.success) {
-              alert('Password reset successful. You can now sign in.');
-              $('#forgotForm').slideUp();
-              $('#resetEmail').val('');
-              $('#newPassword').val('');
-              $('#confirmPassword').val('');
-            } else {
-              alert(response.error || 'Failed to reset password.');
-            }
-          },
-          error: function (xhr, status, error) {
-            console.error('Reset error:', error);
-            alert('Something went wrong. Try again.');
-          }
-        });
-      });
+      }
     });
   </script>
-
 </body>
 </html>

@@ -3,176 +3,331 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Skill Development Courses</title>
+  <title>Other Courses - NextGen Learning Hub</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
   <style>
     :root {
-      --primary: #0a130a;
-      --dark: #333;
-      --gray: #ddd;
+      --primary: #9C27B0;
+      --secondary: #3F51B5;
+      --accent: #00BCD4;
+      --dark: #2D3047;
+      --light: #F8F9FA;
     }
 
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      font-family: 'Poppins', 'Segoe UI', sans-serif;
     }
 
     body {
-      background: #f0f8ff;
-      color: var(--dark);
+      background: linear-gradient(135deg, #9c27b0 0%, #3f51b5 100%);
+      min-height: 100vh;
     }
 
-    header {
-      background: #4CAF50;
-      padding: 1rem 2rem;
-      text-align: center;
-    }
-
-    .logo {
-      font-size: 1.6rem;
-      color: white;
-      font-weight: bold;
-    }
-
-    main {
+    .course-header {
+      background: rgba(255, 255, 255, 0.95);
       padding: 2rem;
-    }
-
-    section {
-      margin-bottom: 3rem;
-    }
-
-    .section-header {
       text-align: center;
+      margin-bottom: 2rem;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    }
+
+    .course-header h1 {
+      font-size: 2.5rem;
+      background: linear-gradient(45deg, var(--primary), var(--secondary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
       margin-bottom: 1rem;
     }
 
-    .section-header h2 {
-      font-size: 1.8rem;
-      color: var(--primary);
-    }
-
-    .video-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 1.5rem;
-    }
-
-    .video-box {
+    .search-section {
       background: white;
-      border-radius: 8px;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-      overflow: hidden;
+      padding: 1.5rem;
+      border-radius: 15px;
+      margin: 0 2rem 2rem 2rem;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.1);
     }
 
-    .video-box iframe {
+    .search-box {
+      display: flex;
+      gap: 1rem;
+    }
+
+    .search-box input {
+      flex: 1;
+      padding: 1rem 1.5rem;
+      border: 2px solid #e0e0e0;
+      border-radius: 12px;
+      font-size: 1rem;
+    }
+
+    .search-box input:focus {
+      outline: none;
+      border-color: var(--primary);
+    }
+
+    .search-btn {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: white;
+      border: none;
+      padding: 1rem 2rem;
+      border-radius: 12px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    .category-section {
+      margin: 2rem;
+    }
+
+    .category-title {
+      color: white;
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+      padding-left: 0.5rem;
+      border-left: 4px solid var(--accent);
+    }
+
+    .videos-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 2rem;
+      margin-bottom: 3rem;
+    }
+
+    .video-card {
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+      transition: all 0.3s ease;
+    }
+
+    .video-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+    }
+
+    .video-card iframe {
       width: 100%;
       height: 200px;
       border: none;
     }
 
-    .video-title {
-      padding: 0.5rem;
-      font-weight: bold;
-      text-align: center;
-      background: #f5f5f5;
+    .video-info {
+      padding: 1.5rem;
     }
 
-    footer {
-      text-align: center;
-      padding: 1.5rem;
-      background: #fff;
-      border-top: 1px solid var(--gray);
-      margin-top: 2rem;
+    .video-info h3 {
+      color: var(--dark);
+      margin-bottom: 0.5rem;
+    }
+
+    .video-info p {
+      color: #666;
+      line-height: 1.6;
+    }
+
+    .back-btn {
+      position: fixed;
+      top: 2rem;
+      left: 2rem;
+      background: white;
+      border: none;
+      padding: 1rem;
+      border-radius: 50%;
+      cursor: pointer;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      transition: all 0.3s ease;
+    }
+
+    .back-btn:hover {
+      transform: scale(1.1);
     }
   </style>
 </head>
 <body>
+  <button class="back-btn" onclick="window.location.href='dashboard.html'">
+    <i class="fas fa-arrow-left"></i>
+  </button>
 
-  <header>
-    <div class="logo">📘 NextGen Learning Hub</div>
-  </header>
+  <div class="course-header">
+    <h1>🌟 Other Courses</h1>
+    <p>Explore cooking, driving, Python programming and various life skills</p>
+  </div>
 
-  <main>
+  <div class="search-section">
+    <div class="search-box">
+      <input type="text" id="courseSearch" placeholder="Search cooking, driving, Python, catering...">
+      <button class="search-btn" onclick="searchVideos()">
+        <i class="fas fa-search"></i>
+        Search
+      </button>
+    </div>
+  </div>
 
-    <!-- Cooking Course -->
-    <section>
-      <div class="section-header">
-        <h2>👨‍🍳 Cooking Course</h2>
-        <p>Learn essential cooking skills with free beginner videos</p>
-      </div>
-      <div class="video-grid">
-        <div class="video-box">
-          <iframe src="https://www.youtube.com/embed/aopS3q6f1GY" allowfullscreen></iframe>
-          <div class="video-title">Cooking Tips For Kitchen Beginners</div>
+  <!-- Cooking Section -->
+  <div class="category-section">
+    <h2 class="category-title">👨‍🍳 Cooking Course</h2>
+    <div class="videos-grid" id="cookingVideos">
+      <!-- Cooking videos will be loaded here -->
+    </div>
+  </div>
+
+  <!-- Driving Section -->
+  <div class="category-section">
+    <h2 class="category-title">🚗 Driving Course</h2>
+    <div class="videos-grid" id="drivingVideos">
+      <!-- Driving videos will be loaded here -->
+    </div>
+  </div>
+
+  <!-- Python Section -->
+  <div class="category-section">
+    <h2 class="category-title">🐍 Python Programming</h2>
+    <div class="videos-grid" id="pythonVideos">
+      <!-- Python videos will be loaded here -->
+    </div>
+  </div>
+
+  <!-- Catering Section -->
+  <div class="category-section">
+    <h2 class="category-title">🍽️ Catering Course</h2>
+    <div class="videos-grid" id="cateringVideos">
+      <!-- Catering videos will be loaded here -->
+    </div>
+  </div>
+
+  <script>
+    const courseVideos = {
+      cooking: [
+        {
+          title: "Cooking Tips For Kitchen Beginners",
+          description: "Essential cooking skills and tips for beginners",
+          url: "https://www.youtube.com/embed/aopS3q6f1GY"
+        },
+        {
+          title: "Learn to Cook in 10 Easy Recipes", 
+          description: "Master cooking with these 10 simple recipes",
+          url: "https://www.youtube.com/embed/a4uU7UZRkUc"
+        }
+      ],
+      driving: [
+        {
+          title: "Learn How to Drive a Car",
+          description: "Complete beginner's guide to driving",
+          url: "https://www.youtube.com/embed/5DYuuV9FQzo"
+        },
+        {
+          title: "Driving Basics for Beginners",
+          description: "Fundamental driving skills and road rules",
+          url: "https://www.youtube.com/embed/DnHc0QN1KwE"
+        }
+      ],
+      python: [
+        {
+          title: "Python for Beginners - Full Course",
+          description: "Complete Python programming tutorial",
+          url: "https://www.youtube.com/embed/_uQrJ0TkZlc"
+        },
+        {
+          title: "Python Tutorial for Beginners",
+          description: "Step-by-step Python learning guide",
+          url: "https://www.youtube.com/embed/rfscVS0vtbw"
+        }
+      ],
+      catering: [
+        {
+          title: "How to Start a Catering Business",
+          description: "Complete guide to starting catering business",
+          url: "https://www.youtube.com/embed/2_Nn22pidZQ"
+        },
+        {
+          title: "Catering Tips & Food Prep",
+          description: "Professional catering techniques and preparation",
+          url: "https://www.youtube.com/embed/k5ZA2cTw9fw"
+        }
+      ]
+    };
+
+    function loadVideos() {
+      // Load cooking videos
+      document.getElementById('cookingVideos').innerHTML = courseVideos.cooking.map(video => `
+        <div class="video-card">
+          <iframe src="${video.url}" allowfullscreen></iframe>
+          <div class="video-info">
+            <h3>${video.title}</h3>
+            <p>${video.description}</p>
+          </div>
         </div>
-        <div class="video-box">
-          <iframe src="https://www.youtube.com/embed/a4uU7UZRkUc" allowfullscreen></iframe>
-          <div class="video-title">Learn to Cook in 10 Easy Recipes</div>
-        </div>
-      </div>
-    </section>
+      `).join('');
 
-    <!-- Catering Course -->
-    <section>
-      <div class="section-header">
-        <h2>🍽️ Catering Course</h2>
-        <p>Explore the basics of catering services and food preparation</p>
-      </div>
-      <div class="video-grid">
-        <div class="video-box">
-          <iframe src="https://www.youtube.com/embed/2_Nn22pidZQ" allowfullscreen></iframe>
-          <div class="video-title">How to Start a Catering Business</div>
+      // Load driving videos
+      document.getElementById('drivingVideos').innerHTML = courseVideos.driving.map(video => `
+        <div class="video-card">
+          <iframe src="${video.url}" allowfullscreen></iframe>
+          <div class="video-info">
+            <h3>${video.title}</h3>
+            <p>${video.description}</p>
+          </div>
         </div>
-        <div class="video-box">
-          <iframe src="https://www.youtube.com/embed/k5ZA2cTw9fw" allowfullscreen></iframe>
-          <div class="video-title">Catering Tips & Food Prep</div>
-        </div>
-      </div>
-    </section>
+      `).join('');
 
-    <!-- Driving Course -->
-    <section>
-      <div class="section-header">
-        <h2>🚗 Driving Course</h2>
-        <p>Beginner driving tutorials to learn the rules of the road</p>
-      </div>
-      <div class="video-grid">
-        <div class="video-box">
-          <iframe src="https://www.youtube.com/embed/5DYuuV9FQzo" allowfullscreen></iframe>
-          <div class="video-title">Learn How to Drive a Car</div>
+      // Load python videos
+      document.getElementById('pythonVideos').innerHTML = courseVideos.python.map(video => `
+        <div class="video-card">
+          <iframe src="${video.url}" allowfullscreen></iframe>
+          <div class="video-info">
+            <h3>${video.title}</h3>
+            <p>${video.description}</p>
+          </div>
         </div>
-        <div class="video-box">
-          <iframe src="https://www.youtube.com/embed/DnHc0QN1KwE" allowfullscreen></iframe>
-          <div class="video-title">Driving Basics for Beginners</div>
+      `).join('');
+
+      // Load catering videos
+      document.getElementById('cateringVideos').innerHTML = courseVideos.catering.map(video => `
+        <div class="video-card">
+          <iframe src="${video.url}" allowfullscreen></iframe>
+          <div class="video-info">
+            <h3>${video.title}</h3>
+            <p>${video.description}</p>
+          </div>
         </div>
-      </div>
-    </section>
+      `).join('');
+    }
 
-    <!-- Python Course -->
-    <section>
-      <div class="section-header">
-        <h2>🐍 Python Programming</h2>
-        <p>Start coding in Python from scratch</p>
-      </div>
-      <div class="video-grid">
-        <div class="video-box">
-          <iframe src="https://www.youtube.com/embed/_uQrJ0TkZlc" allowfullscreen></iframe>
-          <div class="video-title">Python for Beginners - Full Course</div>
-        </div>
-        <div class="video-box">
-          <iframe src="https://www.youtube.com/embed/rfscVS0vtbw" allowfullscreen></iframe>
-          <div class="video-title">Python Tutorial for Beginners</div>
-        </div>
-      </div>
-    </section>
+    function searchVideos() {
+      const searchTerm = document.getElementById('courseSearch').value.toLowerCase();
+      
+      // Search through all categories
+      Object.keys(courseVideos).forEach(category => {
+        const filteredVideos = courseVideos[category].filter(video => 
+          video.title.toLowerCase().includes(searchTerm) || 
+          video.description.toLowerCase().includes(searchTerm)
+        );
+        
+        document.getElementById(category + 'Videos').innerHTML = filteredVideos.map(video => `
+          <div class="video-card">
+            <iframe src="${video.url}" allowfullscreen></iframe>
+            <div class="video-info">
+              <h3>${video.title}</h3>
+              <p>${video.description}</p>
+            </div>
+          </div>
+        `).join('');
+      });
+    }
 
-  </main>
-
-  <footer>
-    &copy; 2025 NextGen Learning Hub. All rights reserved.
-  </footer>
-
+    document.addEventListener('DOMContentLoaded', loadVideos);
+    
+    // Enter key support
+    document.getElementById('courseSearch').addEventListener('keypress', function(e) {
+      if (e.key === 'Enter') {
+        searchVideos();
+      }
+    });
+  </script>
 </body>
 </html>

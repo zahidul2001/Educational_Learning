@@ -3,135 +3,237 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Dashboard - Skill Development</title>
+  <title>Skill Development - NextGen Learning Hub</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
   <style>
     :root {
-      --primary: #0a130a;
-      --secondary: #2196F3;
-      --dark: #333;
-      --light: #f5f5f5;
-      --gray: #ddd;
+      --primary: #4CAF50;
+      --secondary: #FF9800;
+      --accent: #2196F3;
+      --dark: #2D3047;
+      --light: #F8F9FA;
     }
 
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      font-family: 'Poppins', 'Segoe UI', sans-serif;
     }
 
     body {
-      background: linear-gradient(to right, #e0f7fa, #f1f8e9);
-      color: var(--dark);
+      background: linear-gradient(135deg, #4caf50 0%, #ff9800 100%);
+      min-height: 100vh;
     }
 
-    header {
-      background-color: #ca6b6b;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-      padding: 1rem 2rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .logo {
-      font-size: 1.6rem;
-      font-weight: bold;
-      color: var(--primary);
-      display: flex;
-      align-items: center;
-    }
-
-    main {
+    .course-header {
+      background: rgba(255, 255, 255, 0.95);
       padding: 2rem;
-    }
-
-    .section-header {
       text-align: center;
       margin-bottom: 2rem;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
     }
 
-    .section-header h2 {
-      font-size: 2rem;
-      color: var(--primary);
+    .course-header h1 {
+      font-size: 2.5rem;
+      background: linear-gradient(45deg, var(--primary), var(--secondary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 1rem;
     }
 
-    .video-grid {
+    .search-section {
+      background: white;
+      padding: 1.5rem;
+      border-radius: 15px;
+      margin: 0 2rem 2rem 2rem;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+    }
+
+    .search-box {
+      display: flex;
+      gap: 1rem;
+    }
+
+    .search-box input {
+      flex: 1;
+      padding: 1rem 1.5rem;
+      border: 2px solid #e0e0e0;
+      border-radius: 12px;
+      font-size: 1rem;
+    }
+
+    .search-box input:focus {
+      outline: none;
+      border-color: var(--primary);
+    }
+
+    .search-btn {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: white;
+      border: none;
+      padding: 1rem 2rem;
+      border-radius: 12px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    .videos-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 1.5rem;
-      padding: 1rem;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 2rem;
+      padding: 0 2rem 2rem 2rem;
     }
 
-    .video-box {
-      background-color: #ffffff;
-      border-radius: 10px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    .video-card {
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 20px;
       overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+      transition: all 0.3s ease;
     }
 
-    .video-box iframe {
+    .video-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+    }
+
+    .video-card iframe {
       width: 100%;
       height: 200px;
       border: none;
     }
 
-    footer {
-      text-align: center;
+    .video-info {
       padding: 1.5rem;
-      background-color: white;
-      border-top: 1px solid var(--gray);
-      margin-top: 2rem;
+    }
+
+    .video-info h3 {
+      color: var(--dark);
+      margin-bottom: 0.5rem;
+    }
+
+    .video-info p {
+      color: #666;
+      line-height: 1.6;
+    }
+
+    .back-btn {
+      position: fixed;
+      top: 2rem;
+      left: 2rem;
+      background: white;
+      border: none;
+      padding: 1rem;
+      border-radius: 50%;
+      cursor: pointer;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      transition: all 0.3s ease;
+    }
+
+    .back-btn:hover {
+      transform: scale(1.1);
     }
   </style>
 </head>
 <body>
+  <button class="back-btn" onclick="window.location.href='dashboard.html'">
+    <i class="fas fa-arrow-left"></i>
+  </button>
 
-  <header>
-    <div class="logo">📘 NextGen Learning Hub</div>
-  </header>
+  <div class="course-header">
+    <h1>🛠️ Skill Development</h1>
+    <p>Enhance your professional and personal skills for career growth</p>
+  </div>
 
-  <main>
-    <div class="section-header">
-      <h2>Free Skill Development Learning Videos</h2>
-      <p>Boost your skills in web development, Python, and more!</p>
+  <div class="search-section">
+    <div class="search-box">
+      <input type="text" id="courseSearch" placeholder="Search soft skills, career development, personal growth...">
+      <button class="search-btn" onclick="searchVideos()">
+        <i class="fas fa-search"></i>
+        Search
+      </button>
     </div>
+  </div>
 
-    <div class="video-grid">
-      <!-- Web Development Videos -->
-      <div class="video-box">
-        <iframe src="https://www.youtube.com/embed/nu_pCVPKzTk" title="HTML, CSS, JS Full Course" allowfullscreen></iframe>
-      </div>
-      <div class="video-box">
-        <iframe src="https://www.youtube.com/embed/kUMe1FH4CHE" title="HTML Tutorial for Beginners" allowfullscreen></iframe>
-      </div>
+  <div class="videos-grid" id="videosContainer">
+    <!-- Videos will be dynamically loaded here -->
+  </div>
 
-      <!-- Python Development Videos -->
-      <div class="video-box">
-        <iframe src="https://www.youtube.com/embed/_uQrJ0TkZlc" title="Python Full Course for Beginners" allowfullscreen></iframe>
-      </div>
-      <div class="video-box">
-        <iframe src="https://www.youtube.com/embed/rfscVS0vtbw" title="Python Tutorial - Programming with Mosh" allowfullscreen></iframe>
-      </div>
+  <script>
+    const courseVideos = [
+      {
+        title: "Top Skills to Learn in 2024",
+        description: "Most demanded skills for career growth",
+        url: "https://www.youtube.com/embed/kT8H_CfukvY"
+      },
+      {
+        title: "Time Management Mastery", 
+        description: "Effective time management techniques",
+        url: "https://www.youtube.com/embed/z6UrdUAZ7jI"
+      },
+      {
+        title: "Communication Skills Training",
+        description: "Improve your communication abilities",
+        url: "https://www.youtube.com/embed/SjNYZ1xdkCc"
+      },
+      {
+        title: "Critical Thinking Skills",
+        description: "Develop analytical and critical thinking",
+        url: "https://www.youtube.com/embed/dItUGF8GdTw"
+      },
+      {
+        title: "Leadership Skills Development",
+        description: "Become an effective leader",
+        url: "https://www.youtube.com/embed/eeOp6sF-1o0"
+      },
+      {
+        title: "Problem Solving Techniques",
+        description: "Master problem-solving skills",
+        url: "https://www.youtube.com/embed/0sYI6LdKsf8"
+      }
+    ];
 
-      <!-- General Skill Development -->
-      <div class="video-box">
-        <iframe src="https://www.youtube.com/embed/kT8H_CfukvY" title="Top Skills to Learn in 2024" allowfullscreen></iframe>
-      </div>
-      <div class="video-box">
-        <iframe src="https://www.youtube.com/embed/z6UrdUAZ7jI" title="Time Management Tips" allowfullscreen></iframe>
-      </div>
-      </div>
-      <div class="video-box">
-        <iframe src="https://youtu.be/SjNYZ1xdkCc?si=2MG5OWOAgkNdpKjW" title="Time Management Tips" allowfullscreen></iframe>
-      </div>
-    </div>
-  </main>
+    function loadVideos() {
+      const container = document.getElementById('videosContainer');
+      container.innerHTML = courseVideos.map(video => `
+        <div class="video-card">
+          <iframe src="${video.url}" allowfullscreen></iframe>
+          <div class="video-info">
+            <h3>${video.title}</h3>
+            <p>${video.description}</p>
+          </div>
+        </div>
+      `).join('');
+    }
 
-  <footer>
-    &copy; 2025 NextGen Learning Hub. All rights reserved.
-  </footer>
+    function searchVideos() {
+      const searchTerm = document.getElementById('courseSearch').value.toLowerCase();
+      const filteredVideos = courseVideos.filter(video => 
+        video.title.toLowerCase().includes(searchTerm) || 
+        video.description.toLowerCase().includes(searchTerm)
+      );
+      
+      const container = document.getElementById('videosContainer');
+      container.innerHTML = filteredVideos.map(video => `
+        <div class="video-card">
+          <iframe src="${video.url}" allowfullscreen></iframe>
+          <div class="video-info">
+            <h3>${video.title}</h3>
+            <p>${video.description}</p>
+          </div>
+        </div>
+      `).join('');
+    }
 
+    document.addEventListener('DOMContentLoaded', loadVideos);
+    
+    // Enter key support
+    document.getElementById('courseSearch').addEventListener('keypress', function(e) {
+      if (e.key === 'Enter') {
+        searchVideos();
+      }
+    });
+  </script>
 </body>
 </html>

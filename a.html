@@ -1,143 +1,423 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>NextGen Learning Hub</title>
-  <link rel="stylesheet" href="style.css" />
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - NextGen Learning Hub</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #2E86AB;
+            --secondary: #A23B72;
+            --accent: #F18F01;
+            --dark: #2D3047;
+            --light: #F8F9FA;
+            --gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', 'Segoe UI', sans-serif;
+        }
+
+        body {
+            background: var(--gradient);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .register-container {
+            width: 100%;
+            max-width: 500px;
+        }
+
+        .register-header {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: white;
+        }
+
+        .register-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .register-header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .register-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 2.5rem;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            border: 1px solid rgba(255,255,255,0.3);
+        }
+
+        .register-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .form-group {
+            position: relative;
+        }
+
+        .form-group i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #666;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 1rem 1rem 1rem 3rem;
+            border: 2px solid #e1e5e9;
+            border-radius: 12px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: #f8f9fa;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+            background: white;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .btn {
+            padding: 1rem;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            text-decoration: none;
+            display: block;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #257194;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(46, 134, 171, 0.4);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+
+        .btn-secondary:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        .divider {
+            text-align: center;
+            margin: 1.5rem 0;
+            color: #666;
+            position: relative;
+        }
+
+        .divider::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: #e1e5e9;
+        }
+
+        .divider span {
+            background: white;
+            padding: 0 1rem;
+        }
+
+        .notification {
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            text-align: center;
+            font-weight: 600;
+            display: none;
+        }
+
+        .notification.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .notification.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .user-type {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .user-type-option {
+            padding: 1rem;
+            border: 2px solid #e1e5e9;
+            border-radius: 12px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .user-type-option.selected {
+            border-color: var(--primary);
+            background: rgba(46, 134, 171, 0.1);
+        }
+
+        .user-type-option i {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        /* Navigation Links */
+        .nav-links {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .nav-link {
+            color: white;
+            text-decoration: none;
+            padding: 0.7rem 1.2rem;
+            border-radius: 25px;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            transition: all 0.3s ease;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .nav-link:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        @media (max-width: 480px) {
+            .nav-links {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .nav-link {
+                width: 200px;
+                text-align: center;
+                justify-content: center;
+            }
+        }
+    </style>
 </head>
 <body>
+    <div class="register-container">
+        <!-- Navigation Links -->
+        <div class="nav-links">
+            <a href="login.html" class="nav-link">
+                <i class="fas fa-sign-in-alt"></i> User Login
+            </a>
+            <a href="admin-login.html" class="nav-link">
+                <i class="fas fa-user-tie"></i> Admin Login
+            </a>
+            <a href="super-admin-login.html" class="nav-link">
+                <i class="fas fa-shield-alt"></i> Super Admin
+            </a>
+            <a href="dashboard.html" class="nav-link">
+                <i class="fas fa-tachometer-alt"></i> Dashboard
+            </a>
+        </div>
 
-  <header>
-    <div class="logo">📘 NextGen Learning Hub</div>
-  </header>
+        <div class="register-header">
+            <h1>Create Your Account</h1>
+            <p>Join NextGen Learning Hub today</p>
+        </div>
 
-  <main class="main-content">
-    <h1>Welcome to NextGen Learning Hub</h1>
-    <p class="description">
-      Discover a modern learning platform offering free, quality courses in IT, languages, academics, and professional skills. Learn comfortably, anytime and anywhere.
-    </p>
+        <div class="register-card">
+            <form id="registerForm" class="register-form">
+                <!-- Email Field -->
+                <div class="form-group">
+                    <i class="fas fa-envelope"></i>
+                    <input 
+                        type="email" 
+                        name="email" 
+                        class="form-control" 
+                        placeholder="Enter your email" 
+                        required>
+                </div>
 
-    <div class="form-section">
-      <h2>Register Now</h2>
-      <form id="registerForm" class="register-form">
-        <input type="email" name="email" placeholder="Email" required />
-        <input type="password" name="password" placeholder="Password" required />
-        <input type="password" name="confirmPassword" placeholder="Confirm Password" required />
-        <button type="submit">Register</button>
-      </form>
+                <!-- Password Field -->
+                <div class="form-group">
+                    <i class="fas fa-lock"></i>
+                    <input 
+                        type="password" 
+                        name="password" 
+                        class="form-control" 
+                        placeholder="Enter password" 
+                        required>
+                </div>
 
-      <p class="or-text">— OR —</p>
+                <!-- Confirm Password Field -->
+                <div class="form-group">
+                    <i class="fas fa-lock"></i>
+                    <input 
+                        type="password" 
+                        name="confirmPassword" 
+                        class="form-control" 
+                        placeholder="Confirm password" 
+                        required>
+                </div>
 
-      <a href="login.html" class="signin-button">Already have an account? Sign In</a>
+                <!-- User Type Selection -->
+                <div class="form-group">
+                    <label>User Type:</label>
+                    <div class="user-type">
+                        <label class="user-type-option">
+                            <input type="radio" name="userType" value="student" checked>
+                            <i class="fas fa-graduation-cap"></i>
+                            Student
+                        </label>
+                        <label class="user-type-option">
+                            <input type="radio" name="userType" value="instructor">
+                            <i class="fas fa-chalkboard-user"></i>
+                            Instructor
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Submit Button -->
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-user-plus"></i> Register
+                </button>
+
+                <div class="divider">
+                    <span>Already have an account?</span>
+                </div>
+
+                <a href="login.html" class="btn btn-secondary">
+                    <i class="fas fa-sign-in-alt"></i> Login Here
+                </a>
+            </form>
+        </div>
     </div>
-  </main>
 
-  <footer>
-    &copy; 2025 NextGen Learning Hub. Empowering Education for Everyone.
-  </footer>
+    <script>
+        const API_BASE_URL = 'http://localhost:5000/api/auth';
 
-  <script>
-    const API_BASE_URL = 'http://localhost:5000/api/auth';
+        $(document).ready(function() {
+            console.log('✅ Page loaded, jQuery is ready');
 
-    $(document).ready(function() {
-      // Handle registration
-      $('#registerForm').submit(async function(e) {
-        e.preventDefault();
-        
-        const email = $('input[name="email"]').val();
-        const password = $('input[name="password"]').val();
-        const confirmPassword = $('input[name="confirmPassword"]').val();
+            // Registration form submission
+            $('#registerForm').submit(async function(e) {
+                e.preventDefault();
+                console.log('📝 Form submitted');
 
-        if (password !== confirmPassword) {
-          alert('Passwords do not match!');
-          return;
-        }
+                const email = $('input[name="email"]').val();
+                const password = $('input[name="password"]').val();
+                const confirmPassword = $('input[name="confirmPassword"]').val();
+                const userType = $('input[name="userType"]:checked').val();
 
-        const submitBtn = $(this).find('button[type="submit"]');
-        const originalText = submitBtn.text();
-        submitBtn.text('Registering...').prop('disabled', true);
+                console.log('Form values:', { email, password: '***', confirmPassword: '***', userType });
 
-        try {
-          const response = await fetch(`${API_BASE_URL}/register`, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ email, password })
-          });
+                // Validate inputs
+                if (!email) {
+                    alert('❌ Email is required');
+                    return;
+                }
 
-          const data = await response.json();
-          console.log('Registration response:', data);
+                if (!password) {
+                    alert('❌ Password is required');
+                    return;
+                }
 
-          if (response.ok) {
-            alert('Registration successful!');
-            window.location.href = 'dashboard.html';
-          } else {
-            alert(data.error || 'Registration failed');
-          }
-        } catch (error) {
-          console.error('Registration error:', error);
-          alert('An error occurred during registration');
-        } finally {
-          submitBtn.text(originalText).prop('disabled', false);
-        }
-      });
+                if (password !== confirmPassword) {
+                    alert('❌ Passwords do not match!');
+                    return;
+                }
 
-      // Handle login
-      $('#loginForm').submit(async function(e) {
-        e.preventDefault();
-        
-        const submitBtn = $(this).find('button[type="submit"]');
-        const originalText = submitBtn.text();
-        submitBtn.text('Signing in...').prop('disabled', true);
+                if (password.length < 6) {
+                    alert('❌ Password must be at least 6 characters');
+                    return;
+                }
 
-        try {
-          const response = await fetch(`${API_BASE_URL}/login`, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-              email: $('input[name="email"]').val(),
-              password: $('input[name="password"]').val()
-            })
-          });
+                const submitBtn = $(this).find('button[type="submit"]');
+                const originalText = submitBtn.text();
+                submitBtn.text('Registering...').prop('disabled', true);
 
-          const data = await response.json();
-          console.log('Login response:', data);
+                try {
+                    console.log('Sending registration request...');
+                    const response = await fetch(`${API_BASE_URL}/register`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ email, password, confirmPassword, userType })
+                    });
 
-          if (response.ok) {
-            localStorage.setItem('token', data.token);
-            window.location.href = 'dashboard.html';
-          } else {
-            alert(data.error || 'Login failed');
-          }
-        } catch (error) {
-          console.error('Login error:', error);
-          alert('An error occurred during login');
-        } finally {
-          submitBtn.text(originalText).prop('disabled', false);
-        }
-      });
-    });
+                    console.log('Response status:', response.status);
+                    const data = await response.json();
+                    console.log('Response data:', data);
 
-    // Example fetch registration request for testing
-    fetch('http://localhost:5000/api/auth/register', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        email: 'test@example.com',
-        password: '123456'
-      })
-    })
-    .then(res => res.json())
-    .then(data => console.log(data))
-    .catch(err => console.error('Registration error:', err));
-  </script>
-
+                    if (response.ok) {
+                        alert('✅ Registration successful! You can now login.');
+                        $('#registerForm')[0].reset();
+                        setTimeout(() => {
+                            window.location.href = 'login.html';
+                        }, 1000);
+                    } else {
+                        alert('❌ ' + (data.error || 'Registration failed'));
+                        console.warn('Error details:', data.details);
+                    }
+                } catch (error) {
+                    console.error('Registration error:', error);
+                    alert('❌ An error occurred: ' + error.message);
+                } finally {
+                    submitBtn.text(originalText).prop('disabled', false);
+                }
+            });
+        });
+    </script>
 </body>
 </html>

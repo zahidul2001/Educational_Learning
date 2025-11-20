@@ -1,0 +1,1126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin Dashboard - NextGen Learning Hub</title>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #f5f7fa;
+      color: #333;
+      min-height: 100vh;
+    }
+
+    .dashboard-container {
+      display: flex;
+      min-height: 100vh;
+    }
+
+    /* Sidebar Styles */
+    .sidebar {
+      width: 260px;
+      background: linear-gradient(135deg, #1a2a6c 0%, #2c3e50 100%);
+      color: white;
+      padding: 1.5rem 0;
+      box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+      position: fixed;
+      height: 100vh;
+      overflow-y: auto;
+      z-index: 100;
+    }
+
+    .sidebar-header {
+      padding: 0 1.5rem 1.5rem;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      margin-bottom: 1rem;
+    }
+
+    .sidebar-header h2 {
+      font-size: 1.5rem;
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .admin-info {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      margin-top: 1rem;
+    }
+
+    .admin-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+    }
+
+    .admin-details h4 {
+      font-size: 0.9rem;
+      margin-bottom: 0.2rem;
+    }
+
+    .admin-details p {
+      font-size: 0.8rem;
+      opacity: 0.7;
+    }
+
+    .sidebar-menu {
+      list-style: none;
+    }
+
+    .menu-item {
+      padding: 0.8rem 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      border-left: 3px solid transparent;
+    }
+
+    .menu-item:hover {
+      background: rgba(255,255,255,0.1);
+      border-left-color: rgba(255,255,255,0.5);
+    }
+
+    .menu-item.active {
+      background: rgba(255,255,255,0.15);
+      border-left-color: white;
+    }
+
+    .menu-item i {
+      width: 20px;
+      text-align: center;
+    }
+
+    /* Main Content Styles */
+    .main-content {
+      flex: 1;
+      margin-left: 260px;
+      padding: 2rem;
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid #e1e5e9;
+    }
+
+    .header h1 {
+      font-size: 2rem;
+      color: #1a2a6c;
+    }
+
+    .header-actions {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+    }
+
+    .logout-btn {
+      padding: 0.7rem 1.2rem;
+      background: #e74c3c;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .logout-btn:hover {
+      background: #c0392b;
+      transform: translateY(-2px);
+    }
+
+    /* Dashboard Cards */
+    .dashboard-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .card {
+      background: white;
+      border-radius: 12px;
+      padding: 1.5rem;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+      transition: all 0.3s ease;
+      border-left: 4px solid #1a2a6c;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+
+    .card-title {
+      font-size: 1rem;
+      color: #666;
+      font-weight: 600;
+    }
+
+    .card-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 1.2rem;
+    }
+
+    .card-icon.users { background: #3498db; }
+    .card-icon.courses { background: #9b59b6; }
+    .card-icon.revenue { background: #2ecc71; }
+    .card-icon.requests { background: #f39c12; }
+    .card-icon.super-admin { background: #8E2DE2; }
+
+    .card-value {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #1a2a6c;
+      margin-bottom: 0.5rem;
+    }
+
+    .card-change {
+      font-size: 0.9rem;
+      color: #27ae60;
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+
+    .card-change.negative {
+      color: #e74c3c;
+    }
+
+    /* Content Sections */
+    .content-section {
+      background: white;
+      border-radius: 12px;
+      padding: 1.5rem;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+      margin-bottom: 2rem;
+    }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid #e1e5e9;
+    }
+
+    .section-title {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: #1a2a6c;
+    }
+
+    .section-actions button {
+      padding: 0.6rem 1rem;
+      background: #1a2a6c;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+
+    .section-actions button:hover {
+      background: #2c3e50;
+      transform: translateY(-2px);
+    }
+
+    /* Table Styles */
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .data-table th {
+      text-align: left;
+      padding: 0.8rem;
+      border-bottom: 2px solid #e1e5e9;
+      color: #666;
+      font-weight: 600;
+    }
+
+    .data-table td {
+      padding: 0.8rem;
+      border-bottom: 1px solid #e1e5e9;
+    }
+
+    .data-table tr:hover {
+      background: #f8f9fa;
+    }
+
+    .status {
+      padding: 0.3rem 0.8rem;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+
+    .status.active {
+      background: #e8f6ef;
+      color: #27ae60;
+    }
+
+    .status.pending {
+      background: #fef9e7;
+      color: #f39c12;
+    }
+
+    .status.inactive {
+      background: #fdedec;
+      color: #e74c3c;
+    }
+
+    .action-btn {
+      padding: 0.4rem 0.8rem;
+      background: transparent;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-right: 0.5rem;
+      transition: all 0.3s ease;
+    }
+
+    .action-btn.approve {
+      color: #27ae60;
+      border-color: #27ae60;
+    }
+
+    .action-btn.reject {
+      color: #e74c3c;
+      border-color: #e74c3c;
+    }
+
+    .action-btn.edit {
+      color: #3498db;
+      border-color: #3498db;
+    }
+
+    .action-btn.delete {
+      color: #e74c3c;
+      border-color: #e74c3c;
+    }
+
+    .action-btn:hover {
+      transform: translateY(-2px);
+    }
+
+    .action-btn.approve:hover {
+      background: #27ae60;
+      color: white;
+    }
+
+    .action-btn.reject:hover {
+      background: #e74c3c;
+      color: white;
+    }
+
+    .action-btn.edit:hover {
+      background: #3498db;
+      color: white;
+    }
+
+    .action-btn.delete:hover {
+      background: #e74c3c;
+      color: white;
+    }
+
+    /* Super Admin Request Styles */
+    .request-item {
+      background: #f8f9fa;
+      border-radius: 10px;
+      padding: 1.5rem;
+      margin-bottom: 1rem;
+      border-left: 4px solid #f39c12;
+    }
+
+    .request-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 1rem;
+    }
+
+    .request-user {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .user-avatar {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: #3498db;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 1.2rem;
+      font-weight: bold;
+    }
+
+    .user-info h4 {
+      margin-bottom: 0.3rem;
+      color: #2c3e50;
+    }
+
+    .user-info p {
+      color: #7f8c8d;
+      font-size: 0.9rem;
+    }
+
+    .request-date {
+      color: #95a5a6;
+      font-size: 0.8rem;
+    }
+
+    .request-reason {
+      background: white;
+      padding: 1rem;
+      border-radius: 8px;
+      margin-bottom: 1rem;
+    }
+
+    .request-reason h5 {
+      margin-bottom: 0.5rem;
+      color: #2c3e50;
+    }
+
+    .request-actions {
+      display: flex;
+      gap: 0.5rem;
+      justify-content: flex-end;
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 3rem;
+      color: #7f8c8d;
+    }
+
+    .empty-state i {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      color: #bdc3c7;
+    }
+
+    /* Modal Styles */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0,0,0,0.5);
+      backdrop-filter: blur(5px);
+    }
+
+    .modal-content {
+      background: white;
+      margin: 5% auto;
+      padding: 2rem;
+      border-radius: 20px;
+      width: 90%;
+      max-width: 500px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+      position: relative;
+    }
+
+    .close-modal {
+      position: absolute;
+      right: 1rem;
+      top: 1rem;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: #666;
+    }
+
+    .modal-title {
+      margin-bottom: 1.5rem;
+      color: #2c3e50;
+    }
+
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+
+    .form-label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+      color: #2c3e50;
+    }
+
+    .form-control {
+      width: 100%;
+      padding: 0.8rem;
+      border: 2px solid #e1e5e9;
+      border-radius: 8px;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+    }
+
+    .form-control:focus {
+      outline: none;
+      border-color: #1a2a6c;
+      box-shadow: 0 0 0 3px rgba(26, 42, 108, 0.1);
+    }
+
+    textarea.form-control {
+      min-height: 100px;
+      resize: vertical;
+    }
+
+    .modal-actions {
+      display: flex;
+      gap: 1rem;
+      justify-content: flex-end;
+      margin-top: 2rem;
+    }
+
+    .btn {
+      padding: 0.8rem 1.5rem;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+
+    .btn-primary {
+      background: #1a2a6c;
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: #2c3e50;
+      transform: translateY(-2px);
+    }
+
+    .btn-danger {
+      background: #e74c3c;
+      color: white;
+    }
+
+    .btn-danger:hover {
+      background: #c0392b;
+      transform: translateY(-2px);
+    }
+
+    .btn-secondary {
+      background: #95a5a6;
+      color: white;
+    }
+
+    .btn-secondary:hover {
+      background: #7f8c8d;
+      transform: translateY(-2px);
+    }
+
+    /* Responsive Design */
+    @media (max-width: 1024px) {
+      .sidebar {
+        width: 220px;
+      }
+      
+      .main-content {
+        margin-left: 220px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .sidebar {
+        width: 70px;
+        overflow: visible;
+      }
+      
+      .sidebar-header h2 span,
+      .admin-details,
+      .menu-item span {
+        display: none;
+      }
+      
+      .sidebar-header {
+        padding: 0 1rem 1rem;
+      }
+      
+      .admin-info {
+        justify-content: center;
+      }
+      
+      .menu-item {
+        padding: 0.8rem 1rem;
+        justify-content: center;
+      }
+      
+      .main-content {
+        margin-left: 70px;
+        padding: 1.5rem;
+      }
+      
+      .dashboard-cards {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .request-header {
+        flex-direction: column;
+        gap: 1rem;
+      }
+
+      .request-actions {
+        justify-content: flex-start;
+      }
+    }
+
+    @media (max-width: 576px) {
+      .sidebar {
+        display: none;
+      }
+      
+      .main-content {
+        margin-left: 0;
+      }
+      
+      .dashboard-cards {
+        grid-template-columns: 1fr;
+      }
+      
+      .header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+      }
+      
+      .header-actions {
+        width: 100%;
+        justify-content: space-between;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="dashboard-container">
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <div class="sidebar-header">
+        <h2><i class="fas fa-graduation-cap"></i> <span>NextGen Admin</span></h2>
+        <div class="admin-info">
+          <div class="admin-avatar">
+            <i class="fas fa-user-shield"></i>
+          </div>
+          <div class="admin-details">
+            <h4 id="adminName">Admin User</h4>
+            <p id="adminEmail">admin@nextgen.com</p>
+          </div>
+        </div>
+      </div>
+      
+      <ul class="sidebar-menu">
+        <li class="menu-item active" onclick="showSection('dashboard')">
+          <i class="fas fa-tachometer-alt"></i>
+          <span>Dashboard</span>
+        </li>
+        <li class="menu-item" onclick="showSection('superAdminRequests')">
+          <i class="fas fa-user-shield"></i>
+          <span>Super Admin Requests</span>
+        </li>
+        <li class="menu-item" onclick="showSection('userManagement')">
+          <i class="fas fa-users"></i>
+          <span>User Management</span>
+        </li>
+        <li class="menu-item" onclick="showSection('courseManagement')">
+          <i class="fas fa-book"></i>
+          <span>Course Management</span>
+        </li>
+        <li class="menu-item" onclick="showSection('analytics')">
+          <i class="fas fa-chart-bar"></i>
+          <span>Analytics</span>
+        </li>
+        <li class="menu-item" onclick="showSection('settings')">
+          <i class="fas fa-cog"></i>
+          <span>Settings</span>
+        </li>
+      </ul>
+    </div>
+    
+    <!-- Main Content -->
+    <div class="main-content">
+      <div class="header">
+        <h1 id="sectionTitle">Admin Dashboard</h1>
+        <div class="header-actions">
+          <div class="user-info">
+            Welcome back, <strong id="welcomeName">Admin</strong>
+          </div>
+          <button class="logout-btn" onclick="logout()">
+            <i class="fas fa-sign-out-alt"></i> Logout
+          </button>
+        </div>
+      </div>
+      
+      <!-- Dashboard Section -->
+      <div id="dashboardSection" class="section-content">
+        <!-- Dashboard Cards -->
+        <div class="dashboard-cards">
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title">Total Users</div>
+              <div class="card-icon users">
+                <i class="fas fa-users"></i>
+              </div>
+            </div>
+            <div class="card-value" id="totalUsers">1,248</div>
+            <div class="card-change">
+              <i class="fas fa-arrow-up"></i> 12% from last month
+            </div>
+          </div>
+          
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title">Total Courses</div>
+              <div class="card-icon courses">
+                <i class="fas fa-book"></i>
+              </div>
+            </div>
+            <div class="card-value" id="totalCourses">86</div>
+            <div class="card-change">
+              <i class="fas fa-arrow-up"></i> 5% from last month
+            </div>
+          </div>
+          
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title">Revenue</div>
+              <div class="card-icon revenue">
+                <i class="fas fa-dollar-sign"></i>
+              </div>
+            </div>
+            <div class="card-value" id="totalRevenue">$12,480</div>
+            <div class="card-change">
+              <i class="fas fa-arrow-up"></i> 8% from last month
+            </div>
+          </div>
+          
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title">Pending Requests</div>
+              <div class="card-icon requests">
+                <i class="fas fa-user-shield"></i>
+              </div>
+            </div>
+            <div class="card-value" id="pendingRequests">0</div>
+            <div class="card-change">
+              <i class="fas fa-clock"></i> Need review
+            </div>
+          </div>
+        </div>
+        
+        <!-- Recent Users Section -->
+        <div class="content-section">
+          <div class="section-header">
+            <h3 class="section-title">Recent Users</h3>
+            <div class="section-actions">
+              <button onclick="viewAllUsers()">View All Users</button>
+            </div>
+          </div>
+          
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Join Date</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="recentUsersTable">
+              <tr>
+                <td>John Doe</td>
+                <td>john.doe@example.com</td>
+                <td>2025-01-15</td>
+                <td><span class="status active">Active</span></td>
+                <td>
+                  <button class="action-btn edit"><i class="fas fa-edit"></i></button>
+                  <button class="action-btn delete"><i class="fas fa-trash"></i></button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        
+        <!-- Quick Actions Section -->
+        <div class="content-section">
+          <div class="section-header">
+            <h3 class="section-title">Quick Actions</h3>
+          </div>
+          
+          <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+            <button class="action-btn edit" style="padding: 0.8rem 1.5rem;" onclick="showSection('superAdminRequests')">
+              <i class="fas fa-user-shield"></i> Review Super Admin Requests
+            </button>
+            <button class="action-btn edit" style="padding: 0.8rem 1.5rem;" onclick="createUser()">
+              <i class="fas fa-user-plus"></i> Create New User
+            </button>
+            <button class="action-btn edit" style="padding: 0.8rem 1.5rem;" onclick="createCourse()">
+              <i class="fas fa-book"></i> Add New Course
+            </button>
+            <button class="action-btn edit" style="padding: 0.8rem 1.5rem;" onclick="viewReports()">
+              <i class="fas fa-chart-bar"></i> View Reports
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Super Admin Requests Section -->
+      <div id="superAdminRequestsSection" class="section-content" style="display: none;">
+        <div class="content-section">
+          <div class="section-header">
+            <h3 class="section-title">Super Admin Registration Requests</h3>
+            <div class="section-actions">
+              <button onclick="loadSuperAdminRequests()">
+                <i class="fas fa-sync-alt"></i> Refresh
+              </button>
+            </div>
+          </div>
+          
+          <div id="superAdminRequestsList">
+            <!-- Requests will be loaded here dynamically -->
+            <div class="empty-state">
+              <i class="fas fa-user-shield"></i>
+              <h3>No Pending Requests</h3>
+              <p>There are no pending Super Admin registration requests at the moment.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Other sections will be added here -->
+      <div id="userManagementSection" class="section-content" style="display: none;">
+        <div class="content-section">
+          <h3>User Management</h3>
+          <p>User management functionality will be implemented here.</p>
+        </div>
+      </div>
+
+      <div id="courseManagementSection" class="section-content" style="display: none;">
+        <div class="content-section">
+          <h3>Course Management</h3>
+          <p>Course management functionality will be implemented here.</p>
+        </div>
+      </div>
+
+      <div id="analyticsSection" class="section-content" style="display: none;">
+        <div class="content-section">
+          <h3>Analytics</h3>
+          <p>Analytics functionality will be implemented here.</p>
+        </div>
+      </div>
+
+      <div id="settingsSection" class="section-content" style="display: none;">
+        <div class="content-section">
+          <h3>Settings</h3>
+          <p>Settings functionality will be implemented here.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Rejection Modal -->
+  <div id="rejectionModal" class="modal">
+    <div class="modal-content">
+      <span class="close-modal" onclick="closeRejectionModal()">&times;</span>
+      <h3 class="modal-title">Reject Super Admin Request</h3>
+      
+      <div class="form-group">
+        <label class="form-label">Rejection Reason</label>
+        <textarea class="form-control" id="rejectionReason" placeholder="Please provide a reason for rejection..."></textarea>
+      </div>
+      
+      <div class="modal-actions">
+        <button class="btn btn-secondary" onclick="closeRejectionModal()">Cancel</button>
+        <button class="btn btn-danger" onclick="confirmRejection()">Reject Request</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let currentRequestId = null;
+    let adminId = 1; // In real app, get from logged in admin
+
+    // Load admin info on page load
+    $(document).ready(function() {
+      const adminName = localStorage.getItem('adminName') || 'Admin User';
+      const adminEmail = localStorage.getItem('adminEmail') || 'admin@nextgen.com';
+      
+      $('#adminName').text(adminName);
+      $('#adminEmail').text(adminEmail);
+      $('#welcomeName').text(adminName);
+      
+      // Check if user is authenticated
+      const adminToken = localStorage.getItem('adminToken');
+      if (!adminToken) {
+        window.location.href = 'admin-login.html';
+      }
+
+      // Load initial data
+      loadSuperAdminRequests();
+    });
+
+    // Section navigation
+    function showSection(sectionName) {
+      // Hide all sections
+      $('.section-content').hide();
+      
+      // Remove active class from all menu items
+      $('.menu-item').removeClass('active');
+      
+      // Show selected section
+      $(`#${sectionName}Section`).show();
+      
+      // Add active class to clicked menu item
+      $(`.menu-item:contains('${getSectionTitle(sectionName)}')`).addClass('active');
+      
+      // Update section title
+      $('#sectionTitle').text(getSectionTitle(sectionName));
+    }
+
+    function getSectionTitle(sectionName) {
+      const titles = {
+        'dashboard': 'Admin Dashboard',
+        'superAdminRequests': 'Super Admin Requests',
+        'userManagement': 'User Management',
+        'courseManagement': 'Course Management',
+        'analytics': 'Analytics',
+        'settings': 'Settings'
+      };
+      return titles[sectionName] || 'Admin Dashboard';
+    }
+
+    // Load Super Admin Requests
+    function loadSuperAdminRequests() {
+      $.ajax({
+        url: 'http://localhost:5000/api/admin/super-admin-requests',
+        method: 'GET',
+        success: function(response) {
+          if (response.success) {
+            displaySuperAdminRequests(response.requests);
+            $('#pendingRequests').text(response.requests.length);
+          }
+        },
+        error: function(xhr) {
+          console.error('Failed to load Super Admin requests:', xhr.responseJSON);
+        }
+      });
+    }
+
+    // Display Super Admin Requests
+    function displaySuperAdminRequests(requests) {
+      const container = $('#superAdminRequestsList');
+      
+      if (requests.length === 0) {
+        container.html(`
+          <div class="empty-state">
+            <i class="fas fa-user-shield"></i>
+            <h3>No Pending Requests</h3>
+            <p>There are no pending Super Admin registration requests at the moment.</p>
+          </div>
+        `);
+        return;
+      }
+
+      let html = '';
+      requests.forEach(request => {
+        const userInitial = request.name.charAt(0).toUpperCase();
+        const requestDate = new Date(request.created_at).toLocaleDateString();
+        const userJoinDate = new Date(request.user_joined).toLocaleDateString();
+        
+        html += `
+          <div class="request-item" data-request-id="${request.id}">
+            <div class="request-header">
+              <div class="request-user">
+                <div class="user-avatar">${userInitial}</div>
+                <div class="user-info">
+                  <h4>${request.name}</h4>
+                  <p>${request.email}</p>
+                  <small class="request-date">Requested on ${requestDate} • User since ${userJoinDate}</small>
+                </div>
+              </div>
+            </div>
+            
+            ${request.reason ? `
+              <div class="request-reason">
+                <h5>Reason for Super Admin Access:</h5>
+                <p>${request.reason}</p>
+              </div>
+            ` : ''}
+            
+            <div class="request-actions">
+              <button class="action-btn approve" onclick="approveSuperAdminRequest(${request.id})">
+                <i class="fas fa-check"></i> ✅ Approve
+              </button>
+              <button class="action-btn reject" onclick="showRejectionModal(${request.id})">
+                <i class="fas fa-times"></i> ❌ Cancel
+              </button>
+            </div>
+          </div>
+        `;
+      });
+
+      container.html(html);
+    }
+
+    // Approve Super Admin Request
+    function approveSuperAdminRequest(requestId) {
+      if (!confirm('Are you sure you want to approve this Super Admin registration request?\n\nThis user will get full Super Admin privileges.')) {
+        return;
+      }
+
+      $.ajax({
+        url: 'http://localhost:5000/api/admin/super-admin-approve',
+        method: 'POST',
+        contentType: 'application/json',
+        data: JSON.stringify({
+          requestId: requestId,
+          adminId: adminId
+        }),
+        success: function(response) {
+          if (response.success) {
+            alert('✅ Super Admin registration approved successfully!\n\nThe user can now login as Super Admin.');
+            loadSuperAdminRequests();
+          }
+        },
+        error: function(xhr) {
+          alert('Failed to approve request: ' + (xhr.responseJSON?.error || 'Unknown error'));
+        }
+      });
+    }
+
+    // Show Rejection Modal
+    function showRejectionModal(requestId) {
+      currentRequestId = requestId;
+      $('#rejectionReason').val('');
+      $('#rejectionModal').show();
+    }
+
+    // Close Rejection Modal
+    function closeRejectionModal() {
+      $('#rejectionModal').hide();
+      currentRequestId = null;
+    }
+
+    // Confirm Rejection
+    function confirmRejection() {
+      const reason = $('#rejectionReason').val().trim();
+      
+      if (!reason) {
+        alert('Please provide a reason for rejection.');
+        return;
+      }
+
+      if (!confirm('Are you sure you want to reject this Super Admin registration request?')) {
+        return;
+      }
+
+      $.ajax({
+        url: 'http://localhost:5000/api/admin/super-admin-reject',
+        method: 'POST',
+        contentType: 'application/json',
+        data: JSON.stringify({
+          requestId: currentRequestId,
+          adminId: adminId,
+          reason: reason
+        }),
+        success: function(response) {
+          if (response.success) {
+            alert('❌ Super Admin registration request rejected successfully!');
+            closeRejectionModal();
+            loadSuperAdminRequests();
+          }
+        },
+        error: function(xhr) {
+          alert('Failed to reject request: ' + (xhr.responseJSON?.error || 'Unknown error'));
+        }
+      });
+    }
+    
+    // Logout function
+    function logout() {
+      localStorage.removeItem('adminToken');
+      localStorage.removeItem('adminEmail');
+      localStorage.removeItem('adminName');
+      localStorage.removeItem('userRole');
+      window.location.href = 'admin-login.html';
+    }
+    
+    // Navigation functions
+    function viewAllUsers() {
+      alert('Redirecting to user management page...');
+      showSection('userManagement');
+    }
+    
+    function createUser() {
+      alert('Opening user creation form...');
+    }
+    
+    function createCourse() {
+      alert('Opening course creation form...');
+    }
+    
+    function viewReports() {
+      alert('Opening analytics dashboard...');
+      showSection('analytics');
+    }
+
+    // Close modal when clicking outside
+    window.onclick = function(event) {
+      const modal = document.getElementById('rejectionModal');
+      if (event.target === modal) {
+        closeRejectionModal();
+      }
+    }
+  </script>
+</body>
+</html>

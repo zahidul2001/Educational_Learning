@@ -23,7 +23,7 @@
   .logo {
     font-size: 26px;
     font-weight: bold;
-    color: rgb(19, 15, 15);
+    color: rgb(40, 44, 42);
     text-shadow: 1px 1px 4px rgb(228, 221, 221);
   }
   
@@ -50,7 +50,7 @@
   }
   
   .form-section {
-    background-color: rgba(255, 255, 255, 0.1);
+    background-color: rgba(147, 19, 19, 0.1);
     padding: 25px;
     border-radius: 12px;
     backdrop-filter: blur(5px);
@@ -69,7 +69,7 @@
   .register-form button {
     width: 100%;
     padding: 12px;
-    background-color: #00c896;
+    background-color: #2d08a5;
     border: none;
     border-radius: 6px;
     color: white;
@@ -80,7 +80,7 @@
   }
   
   .register-form button:hover {
-    background-color: #00a37c;
+    background-color: #070160;
   }
   
   .or-text {
@@ -102,8 +102,8 @@
     display: block;
     padding: 0.8rem;
     background-color: transparent;
-    color: #4CAF50;
-    border: 1px solid #4CAF50;
+    color: #ffffff;
+    border: 1px solid #300a8f;
     border-radius: 4px;
     text-align: center;
     text-decoration: none;
