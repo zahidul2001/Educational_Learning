@@ -1,8 +1,8 @@
-# EDucatinal Learning Hub - README Documentation
+# EDucational Learning Hub - README Documentation
 
 ## 📚 Project Overview
 
-**EDucatinal Learning Hub** is a comprehensive online education platform that provides free, high-quality educational resources to learners worldwide. The platform offers courses in IT skills, freelancing, language learning, and more, with a mission to make education accessible to everyone.
+**EDucational Learning Hub** is a comprehensive online education platform that provides free, high-quality educational resources to learners worldwide. The platform offers courses in IT skills, freelancing, language learning, and more, with a mission to make education accessible to everyone.
 
 ## 🎯 Key Features
 
